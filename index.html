@@ -67,8 +67,22 @@
         
         .platform-section { margin-bottom: 2.8rem; }
         .platform-header { display: flex; justify-content: space-between; align-items: center; margin: 1rem 0 1rem; flex-wrap: wrap; }
-        .platform-title { font-size: 1.5rem; font-weight: 700; padding-right: 0.8rem; border-right: 5px solid #F0B90B; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(90deg, rgba(240,185,11,0.1), transparent); padding: 0.2rem 1rem 0.2rem 1.5rem; border-radius: 30px; }
-        .platform-title i { font-size: 1.3rem; color: #F0B90B; }
+        .platform-title { 
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            padding-right: 0.8rem; 
+            border-right: 5px solid #F0B90B; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            background: linear-gradient(90deg, rgba(240,185,11,0.1), transparent); 
+            padding: 0.2rem 1rem 0.2rem 1.5rem; 
+            border-radius: 30px; 
+        }
+        @media (max-width: 600px) {
+            .platform-title { font-size: 1rem; }
+        }
+        .platform-title i { font-size: 1.2rem; color: #F0B90B; }
         .slider-nav { display: flex; gap: 10px; }
         .slider-btn { background: #1E2329; border: 1px solid #2EBD85; color: #2EBD85; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
         .slider-btn:hover { background: #2EBD85; color: #0B0E11; transform: scale(1.05); }
@@ -117,7 +131,6 @@
     </div>
     <div class="promo-section">
         <div class="promo-text">عايز تكبر على السوشيال ميديا وتوصل للشهرة؟<br>خدماتنا تساعدك على تحقيق نمو حقيقي وزيادة التفاعل بطريقة <span>احترافية وآمنة!</span></div>
-        <!-- الأيقونات الثابتة كما كانت في البداية -->
         <div class="platform-icons">
             <div class="icon-circle" data-platform="facebook"><i class="fab fa-facebook-f"></i></div>
             <div class="icon-circle" data-platform="youtube"><i class="fab fa-youtube"></i></div>
@@ -175,11 +188,10 @@
     registerNewUser();
     updateUI();
 
-    // تأثير الضغط على الأيقونات (يتحول إلى اللون الأخضر مؤقتاً)
+    // تأثير الضغط على الأيقونات
     const iconCircles = document.querySelectorAll('.icon-circle');
     iconCircles.forEach(icon => {
         icon.addEventListener('click', function(e) {
-            // إضافة تأثير مؤقت
             this.style.transition = '0.1s';
             this.style.backgroundColor = '#2EBD85';
             this.style.color = '#0B0E11';
@@ -187,8 +199,6 @@
                 this.style.backgroundColor = '';
                 this.style.color = '';
             }, 200);
-            // يمكن إضافة وظيفة أخرى هنا إذا احتجت (مثل التمرير إلى القسم الخاص بالمنصة)
-            // لكن حسب الطلب فقط تأثير الضغط.
         });
     });
 
@@ -306,7 +316,7 @@
         }
     };
     
-    // دالة إنشاء بطاقة مع حقل رابط إلزامي (كما هي دون تغيير)
+    // ---------- دالة إنشاء بطاقة مع تحديث الحد الأدنى لخدمات اللايكات ----------
     function createServiceCard(service) {
         const card = document.createElement('div'); card.className = 'service-card';
         const iconDiv = document.createElement('div'); iconDiv.className = 'card-icon'; iconDiv.innerHTML = `<i class="${service.icon}"></i>`;
@@ -323,13 +333,22 @@
         priceContainer.innerHTML = `<span class="price-value">${service.pricePerThousand}</span> <span class="price-currency">جنيه</span> <span class="small-unit">لكل 1000 ${service.unit}</span>`;
         card.appendChild(priceContainer);
         
+        // تحديد الحد الأدنى والخطوة
         let minLimit = 1000, stepValue = 500;
-        if (service.isComment === true) { minLimit = 50; stepValue = 10; }
+        if (service.isComment === true) { 
+            minLimit = 50; 
+            stepValue = 10; 
+        } 
+        // إذا كانت الخدمة من نوع "لايك" (لايكات)
+        else if (service.name.includes("لايك") || service.unit === "لايك") {
+            minLimit = 250;
+            stepValue = 50;
+        }
         
         const calcDiv = document.createElement('div'); calcDiv.className = 'quantity-calc';
         const label = document.createElement('span'); label.className = 'quantity-label'; 
         label.innerText = `📦 الكمية المطلوبة (الحد الأدنى ${minLimit} ${service.unit})`;
-        const input = document.createElement('input'); input.type = 'number'; input.placeholder = `مثال: ${minLimit === 50 ? '200' : '2500'} ${service.unit}`;
+        const input = document.createElement('input'); input.type = 'number'; input.placeholder = `مثال: ${minLimit === 50 ? '200' : (minLimit === 250 ? '500' : '2500')} ${service.unit}`;
         input.className = 'quantity-input'; input.value = ''; input.min = minLimit; input.step = stepValue;
         
         const urlLabel = document.createElement('span'); urlLabel.className = 'quantity-label'; urlLabel.style.marginTop = '8px';
@@ -386,7 +405,7 @@
         return card;
     }
     
-    // بناء الأقسام مع أزرار الأسهم الصحيحة
+    // بناء الأقسام
     const sectionsContainer = document.getElementById('sectionsContainer');
     function buildAllSections() {
         sectionsContainer.innerHTML = '';
