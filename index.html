@@ -44,7 +44,7 @@
             background: #1E2329;
             border-radius: 20px;
             padding: 0.5rem 0;
-            width: 180px;
+            width: 200px;
             z-index: 1001;
             display: none;
             flex-direction: column;
@@ -73,7 +73,6 @@
             display: flex;
         }
         
-        /* الأزرار الإضافية */
         .payment-method-btn {
             background: #2EBD85;
             border: none;
@@ -147,98 +146,20 @@
             position: absolute;
             right: 0;
         }
-        /* تم إزالة زر back-btn بالكامل */
         
-        /* تنسيق صفحة طرق الدفع (بطاقات احترافية) */
-        .payment-categories {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            margin-top: 1rem;
-        }
-        .payment-category {
-            background: #0B0E11;
-            border-radius: 28px;
-            padding: 1.2rem;
-            border: 1px solid rgba(240, 185, 11, 0.2);
-            transition: 0.2s;
-        }
-        .payment-category h3 {
-            color: #F0B90B;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px dashed rgba(240, 185, 11, 0.3);
-            padding-bottom: 0.5rem;
-        }
-        .payment-methods-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 0.8rem;
-            margin-top: 0.5rem;
-        }
-        .payment-card {
-            background: #1E2329;
-            border: 1px solid rgba(46, 189, 133, 0.3);
-            border-radius: 50px;
-            padding: 0.6rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-weight: 600;
-            transition: 0.2s;
-            color: #EAECEF;
-        }
-        .payment-card i {
-            color: #2EBD85;
-            font-size: 1.1rem;
-        }
-        .payment-card:hover {
-            background: #2EBD85;
-            color: #0B0E11;
-            border-color: #2EBD85;
-            transform: translateY(-2px);
-        }
-        .payment-card:hover i {
-            color: #0B0E11;
-        }
-        .step-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-        .step-card {
-            background: #1E2329;
-            border-radius: 20px;
-            padding: 0.8rem 1rem;
-            flex: 1;
-            min-width: 160px;
-            text-align: center;
-            border: 1px solid rgba(240, 185, 11, 0.3);
-        }
-        .step-number {
-            background: #F0B90B;
-            color: #0B0E11;
-            width: 28px;
-            height: 28px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-        .note-box {
-            background: rgba(46, 189, 133, 0.1);
-            border-right: 4px solid #2EBD85;
-            padding: 0.8rem;
-            border-radius: 20px;
-            margin: 1rem 0;
-        }
+        /* تنسيق صفحة طرق الدفع */
+        .payment-categories { display: flex; flex-direction: column; gap: 2rem; margin-top: 1rem; }
+        .payment-category { background: #0B0E11; border-radius: 28px; padding: 1.2rem; border: 1px solid rgba(240, 185, 11, 0.2); transition: 0.2s; }
+        .payment-category h3 { color: #F0B90B; font-size: 1.3rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; border-bottom: 1px dashed rgba(240, 185, 11, 0.3); padding-bottom: 0.5rem; }
+        .payment-methods-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.8rem; margin-top: 0.5rem; }
+        .payment-card { background: #1E2329; border: 1px solid rgba(46, 189, 133, 0.3); border-radius: 50px; padding: 0.6rem 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; transition: 0.2s; color: #EAECEF; }
+        .payment-card i { color: #2EBD85; font-size: 1.1rem; }
+        .payment-card:hover { background: #2EBD85; color: #0B0E11; border-color: #2EBD85; transform: translateY(-2px); }
+        .payment-card:hover i { color: #0B0E11; }
+        .step-list { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem; }
+        .step-card { background: #1E2329; border-radius: 20px; padding: 0.8rem 1rem; flex: 1; min-width: 160px; text-align: center; border: 1px solid rgba(240, 185, 11, 0.3); }
+        .step-number { background: #F0B90B; color: #0B0E11; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-bottom: 0.5rem; }
+        .note-box { background: rgba(46, 189, 133, 0.1); border-right: 4px solid #2EBD85; padding: 0.8rem; border-radius: 20px; margin: 1rem 0; }
         
         /* شعار الترحيب المؤقت */
         .welcome-overlay {
@@ -265,16 +186,8 @@
             box-shadow: 0 0 30px rgba(240, 185, 11, 0.3);
             animation: pulse 1.5s infinite;
         }
-        .welcome-card h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #F0B90B;
-            margin-bottom: 0.5rem;
-        }
-        .welcome-card p {
-            font-size: 1rem;
-            color: #2EBD85;
-        }
+        .welcome-card h2 { font-size: 2.5rem; font-weight: 800; color: #F0B90B; margin-bottom: 0.5rem; }
+        .welcome-card p { font-size: 1rem; color: #2EBD85; }
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(240, 185, 11, 0.4); }
             70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(240, 185, 11, 0); }
@@ -289,22 +202,8 @@
         .container { max-width: 1600px; margin: 0 auto; padding: 1.2rem 2rem 2rem; position: relative; }
         @media (max-width: 768px) { .container { padding: 1.2rem 1rem 2rem; } }
         .header { text-align: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(240, 185, 11, 0.2); padding-bottom: 1rem; }
-        .logo-text {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #F0B90B, #FFD966);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
-            margin-bottom: 0.5rem;
-        }
-        .main-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #F0B90B;
-            margin: 0.2rem 0 0.3rem;
-        }
+        .logo-text { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #F0B90B, #FFD966); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.5px; margin-bottom: 0.5rem; }
+        .main-title { font-size: 1.8rem; font-weight: 800; color: #F0B90B; margin: 0.2rem 0 0.3rem; }
         .stats-row { display: flex; justify-content: center; gap: 1.5rem; margin: 1.5rem 0 0.8rem; flex-wrap: wrap; }
         .stat-card { background: #1E2329; border-radius: 28px; padding: 0.5rem 1.8rem; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(240, 185, 11, 0.25); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
         .stat-icon { font-size: 1.8rem; color: #F0B90B; }
@@ -377,16 +276,16 @@
     </div>
 </div>
 
-<!-- زر القائمة والدراب داون -->
+<!-- زر القائمة والدراب داون (طرق الدفع أولاً) -->
 <div class="menu-button" id="menuButton">
     <i class="fas fa-bars"></i>
 </div>
 <div class="dropdown-menu" id="dropdownMenu">
-    <a href="#" id="termsLink"><i class="fas fa-file-alt"></i> شروط الخدمة</a>
     <a href="#" id="paymentLink"><i class="fas fa-credit-card"></i> طرق الدفع</a>
+    <a href="#" id="termsLink"><i class="fas fa-file-alt"></i> شروط الخدمة</a>
 </div>
 
-<!-- صفحة شروط الخدمة (تمت إزالة زر العودة) -->
+<!-- صفحة شروط الخدمة -->
 <div id="termsPage" class="overlay-page">
     <div class="overlay-container">
         <h1>شروط الخدمة</h1>
@@ -405,78 +304,31 @@
     </div>
 </div>
 
-<!-- صفحة طرق الدفع (تمت إزالة زر العودة) -->
+<!-- صفحة طرق الدفع -->
 <div id="paymentPage" class="overlay-page">
     <div class="overlay-container">
         <h1>طرق الدفع المتاحة</h1>
         <p>نوفر في SMCole مجموعة متنوعة من وسائل الدفع الآمنة والمرنة لتسهيل إتمام طلباتك بكل سرعة وراحة.</p>
-        
         <div class="payment-categories">
-            <div class="payment-category">
-                <h3><i class="fas fa-wallet"></i> المحافظ الإلكترونية</h3>
-                <div class="payment-methods-grid">
-                    <div class="payment-card"><i class="fas fa-mobile-alt"></i> فودافون كاش</div>
-                    <div class="payment-card"><i class="fas fa-mobile-alt"></i> اتصالات كاش</div>
-                    <div class="payment-card"><i class="fas fa-mobile-alt"></i> أورنج كاش</div>
-                    <div class="payment-card"><i class="fas fa-mobile-alt"></i> وي كاش</div>
-                </div>
-            </div>
-            <div class="payment-category">
-                <h3><i class="fas fa-university"></i> الدفع البنكي والمحلي</h3>
-                <div class="payment-methods-grid">
-                    <div class="payment-card"><i class="fas fa-exchange-alt"></i> إنستا باي</div>
-                    <div class="payment-card"><i class="fab fa-cc-visa"></i> فيزا</div>
-                    <div class="payment-card"><i class="fab fa-cc-mastercard"></i> ماستر كارد</div>
-                    <div class="payment-card"><i class="fas fa-credit-card"></i> ميزة</div>
-                </div>
-            </div>
-            <div class="payment-category">
-                <h3><i class="fas fa-coins"></i> الدفع الرقمي والعملات المشفرة</h3>
-                <div class="payment-methods-grid">
-                    <div class="payment-card"><i class="fab fa-bitcoin"></i> باينانس باي</div>
-                    <div class="payment-card"><i class="fas fa-chart-line"></i> عملات رقمية مشفرة</div>
-                </div>
-            </div>
-            <div class="payment-category">
-                <h3><i class="fas fa-credit-card"></i> بوابات الدفع الإلكترونية</h3>
-                <div class="payment-methods-grid">
-                    <div class="payment-card"><i class="fas fa-money-bill-wave"></i> كاشير</div>
-                </div>
-            </div>
+            <div class="payment-category"><h3><i class="fas fa-wallet"></i> المحافظ الإلكترونية</h3><div class="payment-methods-grid"><div class="payment-card"><i class="fas fa-mobile-alt"></i> فودافون كاش</div><div class="payment-card"><i class="fas fa-mobile-alt"></i> اتصالات كاش</div><div class="payment-card"><i class="fas fa-mobile-alt"></i> أورنج كاش</div><div class="payment-card"><i class="fas fa-mobile-alt"></i> وي كاش</div></div></div>
+            <div class="payment-category"><h3><i class="fas fa-university"></i> الدفع البنكي والمحلي</h3><div class="payment-methods-grid"><div class="payment-card"><i class="fas fa-exchange-alt"></i> إنستا باي</div><div class="payment-card"><i class="fab fa-cc-visa"></i> فيزا</div><div class="payment-card"><i class="fab fa-cc-mastercard"></i> ماستر كارد</div><div class="payment-card"><i class="fas fa-credit-card"></i> ميزة</div></div></div>
+            <div class="payment-category"><h3><i class="fas fa-coins"></i> الدفع الرقمي والعملات المشفرة</h3><div class="payment-methods-grid"><div class="payment-card"><i class="fab fa-bitcoin"></i> باينانس باي</div><div class="payment-card"><i class="fas fa-chart-line"></i> عملات رقمية مشفرة</div></div></div>
+            <div class="payment-category"><h3><i class="fas fa-credit-card"></i> بوابات الدفع الإلكترونية</h3><div class="payment-methods-grid"><div class="payment-card"><i class="fas fa-money-bill-wave"></i> كاشير</div></div></div>
         </div>
-        
         <h2><i class="fas fa-shopping-cart"></i> طريقة الدفع</h2>
-        <div class="step-list">
-            <div class="step-card"><div class="step-number">1</div> اختر الخدمة المطلوبة</div>
-            <div class="step-card"><div class="step-number">2</div> أدخل الرابط والكمية</div>
-            <div class="step-card"><div class="step-number">3</div> اضغط "شراء الآن"</div>
-            <div class="step-card"><div class="step-number">4</div> تحويل لواتساب للتواصل</div>
-            <div class="step-card"><div class="step-number">5</div> اختر وسيلة الدفع المناسبة</div>
-            <div class="step-card"><div class="step-number">6</div> يبدأ التنفيذ بعد تأكيد الدفع</div>
-        </div>
-        
+        <div class="step-list"><div class="step-card"><div class="step-number">1</div> اختر الخدمة المطلوبة</div><div class="step-card"><div class="step-number">2</div> أدخل الرابط والكمية</div><div class="step-card"><div class="step-number">3</div> اضغط "شراء الآن"</div><div class="step-card"><div class="step-number">4</div> تحويل لواتساب للتواصل</div><div class="step-card"><div class="step-number">5</div> اختر وسيلة الدفع المناسبة</div><div class="step-card"><div class="step-number">6</div> يبدأ التنفيذ بعد تأكيد الدفع</div></div>
         <h2><i class="fas fa-info-circle"></i> ملاحظات مهمة</h2>
-        <div class="note-box">
-            <ul style="margin:0">
-                <li>جميع المدفوعات تتم بشكل آمن.</li>
-                <li>يبدأ تنفيذ الطلب بعد تأكيد الدفع فقط.</li>
-                <li>يُرجى التأكد من صحة بيانات الطلب قبل الدفع.</li>
-                <li>جميع المدفوعات بعد التأكيد تعتبر نهائية وغير قابلة للاسترداد.</li>
-            </ul>
-        </div>
+        <div class="note-box"><ul style="margin:0"><li>جميع المدفوعات تتم بشكل آمن.</li><li>يبدأ تنفيذ الطلب بعد تأكيد الدفع فقط.</li><li>يُرجى التأكد من صحة بيانات الطلب قبل الدفع.</li><li>جميع المدفوعات بعد التأكيد تعتبر نهائية وغير قابلة للاسترداد.</li></ul></div>
     </div>
 </div>
 
 <!-- المحتوى الرئيسي -->
 <div class="container" id="mainContent">
     <div class="header">
-        <!-- اسم الموقع النصي الكبير والعريض -->
         <div class="logo-text">SMCOLE</div>
-        <!-- النص الجديد أسفل الاسم -->
         <h1 class="main-title">افضل وارخص موقع تزويد متابعين ومشاهدات</h1>
     </div>
     
-    <!-- عدادات + زر طرق الدفع -->
     <div style="display: flex; flex-direction: column; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><div class="stat-label">مستخدمين نشطين</div><div class="stat-number" id="usersCount">1,248</div></div></div>
@@ -515,7 +367,7 @@
         }
     }, 2000);
 
-    // ---------- عدادات محسنة (مستخدمين وطلبات) ----------
+    // ---------- عدادات محسنة ----------
     const STORAGE_USERS = 'smcole_total_users_global';
     const STORAGE_ORDERS = 'smcole_total_orders_global';
     const SESSION_COUNTED_KEY = 'smcole_session_counted_global';
@@ -554,7 +406,7 @@
     registerNewUser();
     updateUI();
 
-    // ---------- التنقل بين الصفحات (إزالة أزرار العودة والاعتماد على popstate) ----------
+    // ---------- التنقل بين الصفحات ----------
     const menuBtn = document.getElementById('menuButton');
     const dropdown = document.getElementById('dropdownMenu');
     const termsPage = document.getElementById('termsPage');
@@ -574,7 +426,6 @@
         pageToShow.style.display = 'block';
         dropdown.classList.remove('show-dropdown');
         
-        // تحديث حالة المتصفح
         if (pageToShow === termsPage) {
             history.pushState({ page: 'terms' }, 'شروط الخدمة', '#terms');
             currentState = 'terms';
@@ -582,7 +433,7 @@
             history.pushState({ page: 'payment' }, 'طرق الدفع', '#payment');
             currentState = 'payment';
         } else {
-            history.pushState({ page: 'home' }, 'الرئيسية', ' ');
+            if (window.location.hash !== '') history.pushState({ page: 'home' }, 'الرئيسية', ' ');
             currentState = 'home';
         }
     }
@@ -592,64 +443,36 @@
         mainContent.style.display = 'block';
         termsPage.style.display = 'none';
         paymentPage.style.display = 'none';
-        history.pushState({ page: 'home' }, 'الرئيسية', ' ');
+        if (window.location.hash !== '') history.pushState({ page: 'home' }, 'الرئيسية', ' ');
         currentState = 'home';
     }
 
-    // الاستماع لحدث الرجوع
     window.addEventListener('popstate', function(event) {
-        if (event.state) {
-            if (event.state.page === 'terms') {
-                showPage(termsPage);
-            } else if (event.state.page === 'payment') {
-                showPage(paymentPage);
-            } else {
-                showHomePage();
-            }
-        } else {
-            showHomePage();
-        }
+        if (event.state && event.state.page === 'terms') showPage(termsPage);
+        else if (event.state && event.state.page === 'payment') showPage(paymentPage);
+        else showHomePage();
     });
 
-    menuBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle('show-dropdown');
-    });
-    document.addEventListener('click', function(event) {
-        if (!menuBtn.contains(event.target) && !dropdown.contains(event.target)) {
-            dropdown.classList.remove('show-dropdown');
-        }
-    });
+    menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('show-dropdown'); });
+    document.addEventListener('click', function(event) { if (!menuBtn.contains(event.target) && !dropdown.contains(event.target)) dropdown.classList.remove('show-dropdown'); });
 
-    termsLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        showPage(termsPage);
-    });
-    paymentLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        showPage(paymentPage);
-    });
-    paymentMethodBtn.addEventListener('click', () => {
-        showPage(paymentPage);
-    });
+    paymentLink.addEventListener('click', (e) => { e.preventDefault(); showPage(paymentPage); });
+    termsLink.addEventListener('click', (e) => { e.preventDefault(); showPage(termsPage); });
+    paymentMethodBtn.addEventListener('click', () => { showPage(paymentPage); });
 
-    // ---------- ربط الأيقونات بالأقسام ----------
+    // ربط الأيقونات بالأقسام
     const iconCircles = document.querySelectorAll('.icon-circle');
     iconCircles.forEach(icon => {
         icon.addEventListener('click', function(e) {
             this.style.transition = '0.1s';
             this.style.backgroundColor = '#2EBD85';
             this.style.color = '#0B0E11';
-            setTimeout(() => {
-                this.style.backgroundColor = '';
-                this.style.color = '';
-            }, 200);
+            setTimeout(() => { this.style.backgroundColor = ''; this.style.color = ''; }, 200);
             const targetId = this.getAttribute('data-target');
             if (targetId) {
                 const targetSection = document.getElementById(`section-${targetId}`);
                 if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            // إظهار الرئيسية إذا كنا في صفحة أخرى
             showHomePage();
         });
     });
@@ -659,16 +482,22 @@
     const BASE_WA_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
     function encodeMsg(msg) { return encodeURIComponent(msg); }
     
-    // ---------- بيانات المنصات (تمت إضافة الخدمة الجديدة في Facebook) ----------
+    // ---------- بيانات المنصات مع ترتيب خدمات المتابعين من الأقل للأعلى ----------
+    // دالة مساعدة لترتيب خدمات المتابعين حسب السعر
+    function sortFollowers(services) {
+        const followers = services.filter(s => (s.name.includes("متابع") || s.name.includes("مشترك")) && !s.name.includes("مشاهدات") && !s.name.includes("لايك") && !s.name.includes("تعليق") && !s.name.includes("اعضاء"));
+        const others = services.filter(s => !followers.includes(s));
+        followers.sort((a,b) => a.pricePerThousand - b.pricePerThousand);
+        return [...followers, ...others];
+    }
+
     const platformData = {
         facebook: { id: 'facebook', title: '<i class="fab fa-facebook-f"></i> فيسبوك - خدمات الزيادة',
-            services: [
-                // الخدمة الجديدة (أول عنصر)
+            services: sortFollowers([
                 { name: "تزويد متابعين فيسبوك اجانب (بدون ضمان)", unit: "متابع", pricePerThousand: 35, guarantee: "بدون ضمان", icon: "fab fa-facebook-f" },
-                // باقي الخدمات كما هي
+                { name: "تزويد متابعين فيسبوك عرب", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-facebook-f" },
                 { name: "تزويد متابعين فيسبوك مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-facebook-f" },
                 { name: "تزويد متابعين فيسبوك مصريين (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-facebook-f" },
-                { name: "تزويد متابعين فيسبوك عرب", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-facebook-f" },
                 { name: "تزويد متابعين فيسبوك ميكس عرب وأجانب", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-facebook-f" },
                 { name: "تزويد متابعين فيسبوك رخيص (بدون ضمان)", unit: "متابع", pricePerThousand: 55, guarantee: "بدون ضمان", icon: "fab fa-facebook-f" },
                 { name: "تزويد مشاهدات فيسبوك (فيديو/ريلز)", unit: "مشاهدة", pricePerThousand: 60, guarantee: null, icon: "fas fa-play-circle" },
@@ -680,85 +509,85 @@
                 { name: "تزويد مشاهدات فيسبوك مصريين وعرب", unit: "مشاهدة", pricePerThousand: 65, guarantee: null, icon: "fas fa-eye" },
                 { name: "تزويد لايك لتعليق فيسبوك", unit: "لايك", pricePerThousand: 120, guarantee: null, icon: "fas fa-thumbs-up" },
                 { name: "تزويد مشاهدات بث مباشر فيسبوك", unit: "مشاهدة", pricePerThousand: 99, guarantee: null, icon: "fas fa-video" }
-            ]
+            ])
         },
         instagram: { id: 'instagram', title: '<i class="fab fa-instagram"></i> انستقرام - تفاعل ومتابعين',
-            services: [
-                { name: "تزويد متابعين انستقرام مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-instagram" },
-                { name: "تزويد متابعين انستقرام مصريين (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-instagram" },
-                { name: "تزويد متابعين انستقرام عرب (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-instagram" },
+            services: sortFollowers([
                 { name: "تزويد متابع انستقرام رخيص (بدون ضمان)", unit: "متابع", pricePerThousand: 55, guarantee: "بدون ضمان", icon: "fab fa-instagram" },
+                { name: "تزويد متابعين انستقرام مصريين (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-instagram" },
+                { name: "تزويد متابعين انستقرام مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-instagram" },
+                { name: "تزويد متابعين انستقرام عرب (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-instagram" },
                 { name: "تزويد مشاهدات انستقرام (ستوري/ريلز)", unit: "مشاهدة", pricePerThousand: 60, guarantee: null, icon: "fas fa-eye" },
                 { name: "تزويد لايكات انستقرام مصريين", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-heart" },
                 { name: "تزويد لايكات انستقرام عرب", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-heart" },
                 { name: "تزويد تعليقات انستقرام مصريين وعرب", unit: "تعليق", pricePerThousand: 99, guarantee: null, icon: "fas fa-comment", isComment: true },
                 { name: "تزويد مشاهدات انستقرام مصريين وعرب", unit: "مشاهدة", pricePerThousand: 15, guarantee: null, icon: "fas fa-eye" }
-            ]
+            ])
         },
         tiktok: { id: 'tiktok', title: '<i class="fab fa-tiktok"></i> تيك توك - نمو سريع',
-            services: [
-                { name: "تزويد متابعين تيك توك مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-tiktok" },
+            services: sortFollowers([
+                { name: "تزويد متابع تيك توك رخيص (بدون ضمان)", unit: "متابع", pricePerThousand: 75, guarantee: "بدون ضمان", icon: "fab fa-tiktok" },
                 { name: "تزويد متابعين تيك توك مصريين (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-tiktok" },
                 { name: "تزويد متابعين تيك توك أجانب", unit: "متابع", pricePerThousand: 110, guarantee: null, icon: "fab fa-tiktok" },
+                { name: "تزويد متابعين تيك توك مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-tiktok" },
                 { name: "تزويد متابعين تيك توك عرب (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-tiktok" },
-                { name: "تزويد متابع تيك توك رخيص (بدون ضمان)", unit: "متابع", pricePerThousand: 75, guarantee: "بدون ضمان", icon: "fab fa-tiktok" },
                 { name: "تزويد مشاهدات تيك توك مصريين", unit: "مشاهدة", pricePerThousand: 20, guarantee: null, icon: "fas fa-fire" },
                 { name: "تزويد لايكات تيك توك مصريين", unit: "لايك", pricePerThousand: 20, guarantee: null, icon: "fas fa-heart" },
                 { name: "تزويد لايكات تيك توك أجانب", unit: "لايك", pricePerThousand: 60, guarantee: null, icon: "fas fa-heart" },
                 { name: "تزويد تعليقات تيك توك مصريين وعرب", unit: "تعليق", pricePerThousand: 60, guarantee: null, icon: "fas fa-comment", isComment: true },
                 { name: "تزويد تعليقات مصريين وعرب (ضمان 365 يوم)", unit: "تعليق", pricePerThousand: 110, guarantee: "ضمان 365 يوم", icon: "fas fa-comment-dots", isComment: true }
-            ]
+            ])
         },
         youtube: { id: 'youtube', title: '<i class="fab fa-youtube"></i> يوتيوب - مشاهدات ومشتركين',
-            services: [
-                { name: "تزويد مشتركين يوتيوب مصريين (ضمان 30 يوم)", unit: "مشترك", pricePerThousand: 680, guarantee: "ضمان 30 يوم", icon: "fab fa-youtube" },
-                { name: "تزويد مشتركين يوتيوب مصريين (عادي)", unit: "مشترك", pricePerThousand: 600, guarantee: null, icon: "fab fa-youtube" },
+            services: sortFollowers([
                 { name: "تزويد متابع يوتيوب رخيص (بدون ضمان)", unit: "مشترك", pricePerThousand: 250, guarantee: "بدون ضمان", icon: "fab fa-youtube" },
+                { name: "تزويد مشتركين يوتيوب مصريين (عادي)", unit: "مشترك", pricePerThousand: 600, guarantee: null, icon: "fab fa-youtube" },
+                { name: "تزويد مشتركين يوتيوب مصريين (ضمان 30 يوم)", unit: "مشترك", pricePerThousand: 680, guarantee: "ضمان 30 يوم", icon: "fab fa-youtube" },
                 { name: "تزويد مشاهدات يوتيوب مصريين", unit: "مشاهدة", pricePerThousand: 99, guarantee: null, icon: "fas fa-video" },
                 { name: "تزويد لايكات يوتيوب مصريين", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-thumbs-up" },
                 { name: "تزويد تعليقات يوتيوب مصريين وعرب", unit: "تعليق", pricePerThousand: 500, guarantee: null, icon: "fas fa-comment", isComment: true }
-            ]
+            ])
         },
         telegram: { id: 'telegram', title: '<i class="fab fa-telegram"></i> تليجرام - قنوات ومتابعين',
-            services: [
-                { name: "تزويد قناه التليجرام مصريين (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-telegram" },
-                { name: "تزويد قناه التليجرام مصريين وعرب (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-telegram" },
+            services: sortFollowers([
                 { name: "تزويد قناه تليجرام مصريين وعرب (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-telegram" },
+                { name: "تزويد قناه التليجرام مصريين وعرب (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-telegram" },
+                { name: "تزويد قناه التليجرام مصريين (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-telegram" },
                 { name: "تزويد لايكات تليجرام مصريين وعرب", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-thumbs-up" }
-            ]
+            ])
         },
         twitter: { id: 'twitter', title: '<i class="fab fa-twitter"></i> تويتر (X) - خدمات تفاعل',
-            services: [
+            services: sortFollowers([
                 { name: "تزويد متابعين تويتر (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-twitter" },
                 { name: "تزويد متابعين تويتر (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 120, guarantee: "ضمان 30 يوم", icon: "fab fa-twitter" },
                 { name: "تزويد متابعين تويتر (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 180, guarantee: "ضمان 365 يوم", icon: "fab fa-twitter" },
                 { name: "تزويد لايك منشور تويتر", unit: "لايك", pricePerThousand: 65, guarantee: null, icon: "fas fa-heart" },
                 { name: "تزويد مشاهدات تغريده تويتر (1000 بـ20)", unit: "مشاهدة", pricePerThousand: 20, guarantee: null, icon: "fas fa-eye" },
                 { name: "تزويد مشاهدات تغريده تويتر (1000 بـ10)", unit: "مشاهدة", pricePerThousand: 10, guarantee: null, icon: "fas fa-chart-line" }
-            ]
+            ])
         },
         snapchat: { id: 'snapchat', title: '<i class="fab fa-snapchat"></i> سناب شات - متابعين ولايكات',
-            services: [
-                { name: "تزويد متابعين سناب شات عرب (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 1100, guarantee: "ضمان 30 يوم", icon: "fab fa-snapchat" },
+            services: sortFollowers([
                 { name: "تزويد متابعين سناب شات عرب (بدون ضمان)", unit: "متابع", pricePerThousand: 850, guarantee: "بدون ضمان", icon: "fab fa-snapchat" },
+                { name: "تزويد متابعين سناب شات عرب (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 1100, guarantee: "ضمان 30 يوم", icon: "fab fa-snapchat" },
                 { name: "تزويد لايكات سناب شات", unit: "لايك", pricePerThousand: 900, guarantee: null, icon: "fas fa-heart" }
-            ]
+            ])
         },
         whatsapp: { id: 'whatsapp', title: '<i class="fab fa-whatsapp"></i> واتساب - قنوات ومتابعين',
-            services: [
+            services: sortFollowers([
                 { name: "تزويد اعضاء قناه واتساب (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-whatsapp" },
                 { name: "تزويد اعضاء قناه واتساب (ضمان 60 يوم)", unit: "متابع", pricePerThousand: 120, guarantee: "ضمان 60 يوم", icon: "fab fa-whatsapp" },
                 { name: "تزويد لايكات منشور واتساب", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-thumbs-up" }
-            ]
+            ])
         },
         twitch: { id: 'twitch', title: '<i class="fab fa-twitch"></i> تويتش - متابعين ومشاهدات',
-            services: [
+            services: sortFollowers([
                 { name: "تزويد متابعين تويتش (بدون ضمان)", unit: "متابع", pricePerThousand: 55, guarantee: "بدون ضمان", icon: "fab fa-twitch" },
                 { name: "تزويد متابعين تويتش (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 65, guarantee: "ضمان 30 يوم", icon: "fab fa-twitch" },
                 { name: "تزويد متابعين تويتش (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 99, guarantee: "ضمان 365 يوم", icon: "fab fa-twitch" },
                 { name: "تزويد مشاهدات فيديو تويتش", unit: "مشاهدة", pricePerThousand: 99, guarantee: null, icon: "fas fa-video" },
                 { name: "تزويد مشاهدات بث مباشر تويتش", unit: "مشاهدة", pricePerThousand: 99, guarantee: null, icon: "fas fa-tv" }
-            ]
+            ])
         }
     };
     
