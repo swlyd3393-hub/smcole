@@ -3,21 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>smcole</title>
+    <title>smcole - تزويد متابعين ومشاهدات</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
-        body { background-color: #0B0E11; font-family: 'Cairo', sans-serif; color: #EAECEF; line-height: 1.5; overflow-x: hidden; }
+        body { background-color: #0B0E11; font-family: 'Cairo', sans-serif; color: #EAECEF; line-height: 1.5; overflow-x: hidden; position: relative; }
         ::-webkit-scrollbar { width: 6px; height: 4px; }
         ::-webkit-scrollbar-track { background: #1E2329; }
         ::-webkit-scrollbar-thumb { background: #F0B90B; border-radius: 10px; }
-        .container { max-width: 1600px; margin: 0 auto; padding: 1.2rem 2rem 2rem; }
+        
+        /* زر القائمة - ثابت في أعلى الصفحة */
+        .menu-button {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            z-index: 1000;
+            background: #1E2329;
+            border: 1px solid rgba(240, 185, 11, 0.3);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.5rem;
+            color: #F0B90B;
+        }
+        .menu-button:hover {
+            background: #2EBD85;
+            color: #0B0E11;
+            transform: scale(1.05);
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 80px;
+            right: 25px;
+            background: #1E2329;
+            border-radius: 20px;
+            padding: 0.5rem 0;
+            width: 180px;
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            border: 1px solid rgba(240, 185, 11, 0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        .dropdown-menu a {
+            padding: 10px 20px;
+            color: #EAECEF;
+            text-decoration: none;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .dropdown-menu a i {
+            width: 24px;
+            color: #F0B90B;
+        }
+        .dropdown-menu a:hover {
+            background: rgba(46, 189, 133, 0.2);
+            color: #2EBD85;
+        }
+        .show-dropdown {
+            display: flex;
+        }
+        
+        /* الأزرار الإضافية */
+        .payment-method-btn {
+            background: #2EBD85;
+            border: none;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+        .payment-method-btn:hover {
+            background: #22a06f;
+            transform: scale(0.98);
+        }
+        
+        /* صفحات الشروط وطرق الدفع (overlay) */
+        .overlay-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0B0E11;
+            z-index: 1100;
+            overflow-y: auto;
+            padding: 2rem;
+            display: none;
+        }
+        .overlay-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #1E2329;
+            border-radius: 32px;
+            padding: 2rem;
+            border: 1px solid rgba(240, 185, 11, 0.2);
+        }
+        .overlay-container h1 {
+            color: #F0B90B;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        .overlay-container h2 {
+            color: #2EBD85;
+            margin: 1.5rem 0 0.8rem;
+            font-size: 1.4rem;
+            border-right: 4px solid #F0B90B;
+            padding-right: 15px;
+        }
+        .overlay-container p, .overlay-container li {
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 0.8rem;
+        }
+        .overlay-container ul {
+            list-style: none;
+            padding-right: 1rem;
+        }
+        .overlay-container ul li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+        .overlay-container ul li::before {
+            content: "•";
+            color: #F0B90B;
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+        }
+        /* تم إزالة زر back-btn بالكامل */
+        
+        /* تنسيق صفحة طرق الدفع (بطاقات احترافية) */
+        .payment-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .payment-category {
+            background: #0B0E11;
+            border-radius: 28px;
+            padding: 1.2rem;
+            border: 1px solid rgba(240, 185, 11, 0.2);
+            transition: 0.2s;
+        }
+        .payment-category h3 {
+            color: #F0B90B;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px dashed rgba(240, 185, 11, 0.3);
+            padding-bottom: 0.5rem;
+        }
+        .payment-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        .payment-card {
+            background: #1E2329;
+            border: 1px solid rgba(46, 189, 133, 0.3);
+            border-radius: 50px;
+            padding: 0.6rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.2s;
+            color: #EAECEF;
+        }
+        .payment-card i {
+            color: #2EBD85;
+            font-size: 1.1rem;
+        }
+        .payment-card:hover {
+            background: #2EBD85;
+            color: #0B0E11;
+            border-color: #2EBD85;
+            transform: translateY(-2px);
+        }
+        .payment-card:hover i {
+            color: #0B0E11;
+        }
+        .step-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .step-card {
+            background: #1E2329;
+            border-radius: 20px;
+            padding: 0.8rem 1rem;
+            flex: 1;
+            min-width: 160px;
+            text-align: center;
+            border: 1px solid rgba(240, 185, 11, 0.3);
+        }
+        .step-number {
+            background: #F0B90B;
+            color: #0B0E11;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .note-box {
+            background: rgba(46, 189, 133, 0.1);
+            border-right: 4px solid #2EBD85;
+            padding: 0.8rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+        }
+        
+        /* شعار الترحيب المؤقت */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 14, 17, 0.95);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+        .welcome-card {
+            background: linear-gradient(135deg, #1E2329, #0B0E11);
+            padding: 2rem 3rem;
+            border-radius: 60px;
+            text-align: center;
+            border: 2px solid #F0B90B;
+            box-shadow: 0 0 30px rgba(240, 185, 11, 0.3);
+            animation: pulse 1.5s infinite;
+        }
+        .welcome-card h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #F0B90B;
+            margin-bottom: 0.5rem;
+        }
+        .welcome-card p {
+            font-size: 1rem;
+            color: #2EBD85;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(240, 185, 11, 0.4); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(240, 185, 11, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(240, 185, 11, 0); }
+        }
+        @media (max-width: 600px) {
+            .welcome-card h2 { font-size: 1.5rem; }
+            .welcome-card { padding: 1.2rem 1.5rem; }
+        }
+        
+        /* باقي الكود الأصلي مع التعديلات */
+        .container { max-width: 1600px; margin: 0 auto; padding: 1.2rem 2rem 2rem; position: relative; }
         @media (max-width: 768px) { .container { padding: 1.2rem 1rem 2rem; } }
         .header { text-align: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(240, 185, 11, 0.2); padding-bottom: 1rem; }
-        .logo { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #F0B90B, #FFD966); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .main-title { font-size: 2rem; font-weight: 800; color: #F0B90B; margin: 0.2rem 0 0.3rem; }
-        .sub-headline { font-size: 1rem; background: rgba(240, 185, 11, 0.12); display: inline-block; padding: 0.3rem 1.5rem; border-radius: 40px; }
+        .logo-text {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #F0B90B, #FFD966);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+        .main-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #F0B90B;
+            margin: 0.2rem 0 0.3rem;
+        }
         .stats-row { display: flex; justify-content: center; gap: 1.5rem; margin: 1.5rem 0 0.8rem; flex-wrap: wrap; }
         .stat-card { background: #1E2329; border-radius: 28px; padding: 0.5rem 1.8rem; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(240, 185, 11, 0.25); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
         .stat-icon { font-size: 1.8rem; color: #F0B90B; }
@@ -27,61 +314,15 @@
         .promo-section { text-align: center; background: linear-gradient(135deg, rgba(46, 189, 133, 0.08), rgba(240, 185, 11, 0.08)); padding: 1rem; margin: 0.5rem 0 1.5rem; border-radius: 40px; backdrop-filter: blur(4px); border: 1px solid rgba(240, 185, 11, 0.25); }
         .promo-text { font-size: 1rem; font-weight: 600; line-height: 1.6; margin-bottom: 1rem; }
         .promo-text span { color: #F0B90B; }
-        
-        /* أيقونات المنصات الثابتة */
-        .platform-icons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-        .icon-circle {
-            background: #1E2329;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            color: #F0B90B;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(240, 185, 11, 0.3);
-            cursor: pointer;
-        }
-        .icon-circle:hover {
-            transform: translateY(-3px);
-            background: #2EBD85;
-            color: #0B0E11;
-            border-color: #2EBD85;
-        }
-        .icon-circle:active {
-            transform: scale(0.95);
-            background: #1a734a;
-            color: white;
-        }
-        @media (max-width: 600px) {
-            .icon-circle { width: 44px; height: 44px; font-size: 1.3rem; }
-        }
-        
-        .platform-section { margin-bottom: 2.8rem; }
+        .platform-icons { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem; }
+        .icon-circle { background: #1E2329; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #F0B90B; transition: all 0.2s ease; border: 1px solid rgba(240, 185, 11, 0.3); cursor: pointer; }
+        .icon-circle:hover { transform: translateY(-3px); background: #2EBD85; color: #0B0E11; border-color: #2EBD85; }
+        .icon-circle:active { transform: scale(0.95); background: #1a734a; color: white; }
+        @media (max-width: 600px) { .icon-circle { width: 44px; height: 44px; font-size: 1.3rem; } }
+        .platform-section { margin-bottom: 2.8rem; scroll-margin-top: 80px; }
         .platform-header { display: flex; justify-content: space-between; align-items: center; margin: 1rem 0 1rem; flex-wrap: wrap; }
-        .platform-title { 
-            font-size: 1.2rem; 
-            font-weight: 700; 
-            padding-right: 0.8rem; 
-            border-right: 5px solid #F0B90B; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 8px; 
-            background: linear-gradient(90deg, rgba(240,185,11,0.1), transparent); 
-            padding: 0.2rem 1rem 0.2rem 1.5rem; 
-            border-radius: 30px; 
-        }
-        @media (max-width: 600px) {
-            .platform-title { font-size: 1rem; }
-        }
+        .platform-title { font-size: 1.2rem; font-weight: 700; padding-right: 0.8rem; border-right: 5px solid #F0B90B; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(90deg, rgba(240,185,11,0.1), transparent); padding: 0.2rem 1rem 0.2rem 1.5rem; border-radius: 30px; }
+        @media (max-width: 600px) { .platform-title { font-size: 1rem; } }
         .platform-title i { font-size: 1.2rem; color: #F0B90B; }
         .slider-nav { display: flex; gap: 10px; }
         .slider-btn { background: #1E2329; border: 1px solid #2EBD85; color: #2EBD85; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
@@ -116,31 +357,146 @@
         .footer { text-align: center; padding-top: 1rem; font-size: 0.7rem; color: #848E9C; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 1rem; }
         .footer span { color: #F0B90B; }
         button { background: none; border: none; font-family: inherit; cursor: pointer; }
+        
+        @media (max-width: 768px) {
+            .menu-button { top: 15px; right: 15px; width: 40px; height: 40px; font-size: 1.2rem; }
+            .dropdown-menu { top: 65px; right: 15px; }
+            .payment-methods-grid { grid-template-columns: 1fr; }
+            .logo-text { font-size: 2.2rem; }
+            .main-title { font-size: 1.3rem; }
+        }
     </style>
 </head>
 <body>
-<div class="container">
+
+<!-- شعار الترحيب المؤقت "صلوا على النبي" -->
+<div id="welcomeOverlay" class="welcome-overlay">
+    <div class="welcome-card">
+        <h2>ﷺ</h2>
+        <p>صلوا على النبي</p>
+    </div>
+</div>
+
+<!-- زر القائمة والدراب داون -->
+<div class="menu-button" id="menuButton">
+    <i class="fas fa-bars"></i>
+</div>
+<div class="dropdown-menu" id="dropdownMenu">
+    <a href="#" id="termsLink"><i class="fas fa-file-alt"></i> شروط الخدمة</a>
+    <a href="#" id="paymentLink"><i class="fas fa-credit-card"></i> طرق الدفع</a>
+</div>
+
+<!-- صفحة شروط الخدمة (تمت إزالة زر العودة) -->
+<div id="termsPage" class="overlay-page">
+    <div class="overlay-container">
+        <h1>شروط الخدمة</h1>
+        <p>أهلاً بك في SMCole! يسعدنا أن نقدّم لك شروط الخدمة الخاصة بمنصّتنا. يُرجى قراءتها بعناية قبل استخدام أيٍّ من خدماتنا، إذ تمثّل هذه الشروط العقد القانوني بينك وبيننا.</p>
+        <h2>الخدمات</h2>
+        <ul><li>يجب استخدام الموقع وفقًا لشروط وأحكام منصات التواصل الاجتماعي.</li><li>نحتفظ بحق إلغاء أي طلب يخالف القوانين أو الآداب العامة.</li><li>لا نضمن تسليمًا فوريًا، وقد تتأخر بعض الطلبات بناءً على حجم الطلب أو ضغط التنفيذ أو ظروف خارجية.</li><li>لا نتحمّل أي مسؤولية عن المشاكل الناتجة عن تحديثات أو تغييرات منصات التواصل الاجتماعي.</li><li>الأسعار قابلة للتغيير في أي وقت دون إشعار مسبق.</li><li>نحتفظ بحق تعديل أو إيقاف أي خدمة أو بند في الشروط دون إشعار مسبق.</li><li>يُمنع إساءة استخدام الموقع، وسنتخذ الإجراءات المناسبة ضد أي مخالفة.</li><li>في حال إنشاء طلبات متعددة لنفس الرابط، تتحمّل أنت المسؤولية الكاملة عن أي مشكلة قد تنتج.</li><li>نحن غير مسؤولين عن أي خسائر أو أضرار ناتجة عن تأخير في تنفيذ الطلبات.</li><li>لن يتم إعادة تعبئة الطلب إذا كان رقم البداية غير مطابق عند بدء التنفيذ.</li><li>يتحمّل العميل مسؤولية التأكد من صحة الرابط أو اسم المستخدم قبل إرسال الطلب.</li></ul>
+        <h2>آلية الطلب والدفع</h2>
+        <ul><li>يعتمد موقع SMCole على نظام عرض الخدمات وإنشاء الطلبات بشكل مباشر عبر الموقع، ثم التواصل مع مسؤول الطلبات أو فريق المبيعات عبر واتساب لإتمام عملية الدفع وتأكيد الطلب.</li><li>يبدأ تنفيذ الطلب فقط بعد تأكيد عملية الدفع بشكل كامل.</li><li>بمجرد تأكيد الدفع وبدء تجهيز الطلب، لا يمكن إلغاء الطلب أو تعديل البيانات الخاصة به.</li><li>يتحمّل العميل مسؤولية أي خطأ في البيانات أو الروابط التي تم إرسالها أثناء إنشاء الطلب.</li></ul>
+        <h2>التزامات المستخدم</h2><ul><li>يجب استخدام الموقع فقط للأغراض المخصصة له، وعدم استغلاله في أي أنشطة غير مشروعة أو مخالفة للقوانين.</li><li>يُمنع استخدام الموقع للإضرار بالغير أو انتهاك سياسات منصات التواصل الاجتماعي.</li><li>يتحمّل المستخدم المسؤولية الكاملة عن جميع الطلبات والروابط والبيانات التي يقوم بإرسالها عبر الموقع.</li></ul>
+        <h2>سياسة الاسترجاع</h2><ul><li>جميع المدفوعات التي تتم بعد التواصل مع مسؤول الطلبات عبر واتساب تعتبر نهائية وغير قابلة للاسترداد.</li><li>بمجرد تأكيد الدفع وتحويل الطلب للتنفيذ، لا يمكن استرجاع المبلغ المدفوع لأي سبب.</li><li>في حال حدوث تأخير بسبب ضغط الطلبات أو تحديثات المنصات، سيتم متابعة الطلب حتى اكتماله دون استرداد مالي.</li><li>لا يتحمّل موقع SMCole مسؤولية أي خسائر ناتجة عن الاستخدام الخاطئ للخدمات أو سوء إدخال البيانات.</li></ul>
+        <h2>النشاط الاحتيالي</h2><ul><li>نأخذ مكافحة الاحتيال على محمل الجد. سيتم رفض أي طلب أو حظر أي مستخدم يشتبه في استخدامه وسائل دفع احتيالية أو بيانات غير صحيحة دون إشعار مسبق.</li><li>كما نؤكد أننا غير مسؤولين عن أي عمليات دفع تتم من خلال وسائل أو أرقام لا تعود ملكيتها للعميل، وأي مسؤولية قانونية تقع على عاتق المستخدم بالكامل.</li></ul>
+        <h2>خدمة العملاء</h2><ul><li>نؤمن بأهمية الاحترام المتبادل. أي إساءة أو تهديد لفريق الدعم أو مسؤولي الطلبات تُعد مخالفة صريحة قد تؤدي إلى منع المستخدم من الاستفادة من خدمات الموقع، مع احتفاظنا بحق اتخاذ الإجراءات المناسبة لحماية فريقنا.</li></ul>
+        <h2>حقوق الملكية الفكرية</h2><ul><li>جميع الحقوق محفوظة لفريق SMCole. يُمنع نسخ أو استخدام أي جزء من محتوى الموقع أو تطبيقاته (نصوص، تصاميم، أكواد، شعارات) لأي غرض دون موافقة خطية مسبقة منا. أي انتهاك قد يعرّض صاحبه للمساءلة القانونية.</li></ul>
+        <h2>سياسة الخصوصية</h2><ul><li>نحترم خصوصيتك ونلتزم بحماية بياناتك. تُستخدم المعلومات والبيانات التي يتم إرسالها عبر الموقع فقط لغرض تنفيذ الطلبات وتقديم الخدمات، ويتم التعامل معها وفق أعلى معايير الأمان والخصوصية. ولن يتم الكشف عن أي بيانات إلا في حال وجود طلب قانوني رسمي من الجهات المختصة.</li></ul>
+        <h2>التعديلات على الشروط</h2><ul><li>يحق لفريق SMCole تعديل هذه الشروط أو تحديثها في أي وقت دون إشعار مسبق. ويُعتبر استمرار استخدامك للموقع موافقة ضمنية على أي تحديثات أو تعديلات جديدة.</li></ul>
+    </div>
+</div>
+
+<!-- صفحة طرق الدفع (تمت إزالة زر العودة) -->
+<div id="paymentPage" class="overlay-page">
+    <div class="overlay-container">
+        <h1>طرق الدفع المتاحة</h1>
+        <p>نوفر في SMCole مجموعة متنوعة من وسائل الدفع الآمنة والمرنة لتسهيل إتمام طلباتك بكل سرعة وراحة.</p>
+        
+        <div class="payment-categories">
+            <div class="payment-category">
+                <h3><i class="fas fa-wallet"></i> المحافظ الإلكترونية</h3>
+                <div class="payment-methods-grid">
+                    <div class="payment-card"><i class="fas fa-mobile-alt"></i> فودافون كاش</div>
+                    <div class="payment-card"><i class="fas fa-mobile-alt"></i> اتصالات كاش</div>
+                    <div class="payment-card"><i class="fas fa-mobile-alt"></i> أورنج كاش</div>
+                    <div class="payment-card"><i class="fas fa-mobile-alt"></i> وي كاش</div>
+                </div>
+            </div>
+            <div class="payment-category">
+                <h3><i class="fas fa-university"></i> الدفع البنكي والمحلي</h3>
+                <div class="payment-methods-grid">
+                    <div class="payment-card"><i class="fas fa-exchange-alt"></i> إنستا باي</div>
+                    <div class="payment-card"><i class="fab fa-cc-visa"></i> فيزا</div>
+                    <div class="payment-card"><i class="fab fa-cc-mastercard"></i> ماستر كارد</div>
+                    <div class="payment-card"><i class="fas fa-credit-card"></i> ميزة</div>
+                </div>
+            </div>
+            <div class="payment-category">
+                <h3><i class="fas fa-coins"></i> الدفع الرقمي والعملات المشفرة</h3>
+                <div class="payment-methods-grid">
+                    <div class="payment-card"><i class="fab fa-bitcoin"></i> باينانس باي</div>
+                    <div class="payment-card"><i class="fas fa-chart-line"></i> عملات رقمية مشفرة</div>
+                </div>
+            </div>
+            <div class="payment-category">
+                <h3><i class="fas fa-credit-card"></i> بوابات الدفع الإلكترونية</h3>
+                <div class="payment-methods-grid">
+                    <div class="payment-card"><i class="fas fa-money-bill-wave"></i> كاشير</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2><i class="fas fa-shopping-cart"></i> طريقة الدفع</h2>
+        <div class="step-list">
+            <div class="step-card"><div class="step-number">1</div> اختر الخدمة المطلوبة</div>
+            <div class="step-card"><div class="step-number">2</div> أدخل الرابط والكمية</div>
+            <div class="step-card"><div class="step-number">3</div> اضغط "شراء الآن"</div>
+            <div class="step-card"><div class="step-number">4</div> تحويل لواتساب للتواصل</div>
+            <div class="step-card"><div class="step-number">5</div> اختر وسيلة الدفع المناسبة</div>
+            <div class="step-card"><div class="step-number">6</div> يبدأ التنفيذ بعد تأكيد الدفع</div>
+        </div>
+        
+        <h2><i class="fas fa-info-circle"></i> ملاحظات مهمة</h2>
+        <div class="note-box">
+            <ul style="margin:0">
+                <li>جميع المدفوعات تتم بشكل آمن.</li>
+                <li>يبدأ تنفيذ الطلب بعد تأكيد الدفع فقط.</li>
+                <li>يُرجى التأكد من صحة بيانات الطلب قبل الدفع.</li>
+                <li>جميع المدفوعات بعد التأكيد تعتبر نهائية وغير قابلة للاسترداد.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- المحتوى الرئيسي -->
+<div class="container" id="mainContent">
     <div class="header">
-        <div class="logo">SMCOLE</div>
-        <h1 class="main-title">📈 تزويد متابعين • مشاهدات • لايكات</h1>
-        <div class="sub-headline"><i class="fas fa-arrows-alt-h"></i> اسحب البطاقات يميناً أو يساراً لاستعراض الخدمات</div>
+        <!-- اسم الموقع النصي الكبير والعريض -->
+        <div class="logo-text">SMCOLE</div>
+        <!-- النص الجديد أسفل الاسم -->
+        <h1 class="main-title">افضل وارخص موقع تزويد متابعين ومشاهدات</h1>
     </div>
-    <div class="stats-row">
-        <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><div class="stat-label">مستخدمين نشطين</div><div class="stat-number" id="usersCount">1,248</div></div></div>
-        <div class="stat-card"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-info"><div class="stat-label">طلبات مكتملة</div><div class="stat-number" id="ordersCount">3,567</div></div></div>
+    
+    <!-- عدادات + زر طرق الدفع -->
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><div class="stat-label">مستخدمين نشطين</div><div class="stat-number" id="usersCount">1,248</div></div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-info"><div class="stat-label">طلبات مكتملة</div><div class="stat-number" id="ordersCount">3,567</div></div></div>
+        </div>
+        <button class="payment-method-btn" id="paymentMethodBtn"><i class="fas fa-credit-card"></i> طرق الدفع</button>
     </div>
+    
     <div class="promo-section">
         <div class="promo-text">عايز تكبر على السوشيال ميديا وتوصل للشهرة؟<br>خدماتنا تساعدك على تحقيق نمو حقيقي وزيادة التفاعل بطريقة <span>احترافية وآمنة!</span></div>
         <div class="platform-icons">
-            <div class="icon-circle" data-platform="facebook"><i class="fab fa-facebook-f"></i></div>
-            <div class="icon-circle" data-platform="youtube"><i class="fab fa-youtube"></i></div>
-            <div class="icon-circle" data-platform="tiktok"><i class="fab fa-tiktok"></i></div>
-            <div class="icon-circle" data-platform="instagram"><i class="fab fa-instagram"></i></div>
-            <div class="icon-circle" data-platform="telegram"><i class="fab fa-telegram"></i></div>
-            <div class="icon-circle" data-platform="twitter"><i class="fab fa-twitter"></i></div>
-            <div class="icon-circle" data-platform="whatsapp"><i class="fab fa-whatsapp"></i></div>
-            <div class="icon-circle" data-platform="snapchat"><i class="fab fa-snapchat"></i></div>
-            <div class="icon-circle" data-platform="twitch"><i class="fab fa-twitch"></i></div>
+            <div class="icon-circle" data-target="facebook"><i class="fab fa-facebook-f"></i></div>
+            <div class="icon-circle" data-target="youtube"><i class="fab fa-youtube"></i></div>
+            <div class="icon-circle" data-target="tiktok"><i class="fab fa-tiktok"></i></div>
+            <div class="icon-circle" data-target="instagram"><i class="fab fa-instagram"></i></div>
+            <div class="icon-circle" data-target="telegram"><i class="fab fa-telegram"></i></div>
+            <div class="icon-circle" data-target="twitter"><i class="fab fa-twitter"></i></div>
+            <div class="icon-circle" data-target="whatsapp"><i class="fab fa-whatsapp"></i></div>
+            <div class="icon-circle" data-target="snapchat"><i class="fab fa-snapchat"></i></div>
+            <div class="icon-circle" data-target="twitch"><i class="fab fa-twitch"></i></div>
         </div>
     </div>
     <div id="sectionsContainer"></div>
@@ -149,7 +505,17 @@
 </div>
 
 <script>
-    // ---------- عدادات محسنة (مستخدمين وطلبات) مستمرة ----------
+    // إخفاء شعار الترحيب بعد ثانيتين
+    setTimeout(() => {
+        const overlay = document.getElementById('welcomeOverlay');
+        if (overlay) {
+            overlay.style.transition = 'opacity 0.6s ease';
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 600);
+        }
+    }, 2000);
+
+    // ---------- عدادات محسنة (مستخدمين وطلبات) ----------
     const STORAGE_USERS = 'smcole_total_users_global';
     const STORAGE_ORDERS = 'smcole_total_orders_global';
     const SESSION_COUNTED_KEY = 'smcole_session_counted_global';
@@ -188,7 +554,86 @@
     registerNewUser();
     updateUI();
 
-    // تأثير الضغط على الأيقونات
+    // ---------- التنقل بين الصفحات (إزالة أزرار العودة والاعتماد على popstate) ----------
+    const menuBtn = document.getElementById('menuButton');
+    const dropdown = document.getElementById('dropdownMenu');
+    const termsPage = document.getElementById('termsPage');
+    const paymentPage = document.getElementById('paymentPage');
+    const mainContent = document.getElementById('mainContent');
+    
+    const termsLink = document.getElementById('termsLink');
+    const paymentLink = document.getElementById('paymentLink');
+    const paymentMethodBtn = document.getElementById('paymentMethodBtn');
+
+    let currentState = 'home';
+
+    function showPage(pageToShow) {
+        mainContent.style.display = 'none';
+        termsPage.style.display = 'none';
+        paymentPage.style.display = 'none';
+        pageToShow.style.display = 'block';
+        dropdown.classList.remove('show-dropdown');
+        
+        // تحديث حالة المتصفح
+        if (pageToShow === termsPage) {
+            history.pushState({ page: 'terms' }, 'شروط الخدمة', '#terms');
+            currentState = 'terms';
+        } else if (pageToShow === paymentPage) {
+            history.pushState({ page: 'payment' }, 'طرق الدفع', '#payment');
+            currentState = 'payment';
+        } else {
+            history.pushState({ page: 'home' }, 'الرئيسية', ' ');
+            currentState = 'home';
+        }
+    }
+    
+    function showHomePage() {
+        if (currentState === 'home') return;
+        mainContent.style.display = 'block';
+        termsPage.style.display = 'none';
+        paymentPage.style.display = 'none';
+        history.pushState({ page: 'home' }, 'الرئيسية', ' ');
+        currentState = 'home';
+    }
+
+    // الاستماع لحدث الرجوع
+    window.addEventListener('popstate', function(event) {
+        if (event.state) {
+            if (event.state.page === 'terms') {
+                showPage(termsPage);
+            } else if (event.state.page === 'payment') {
+                showPage(paymentPage);
+            } else {
+                showHomePage();
+            }
+        } else {
+            showHomePage();
+        }
+    });
+
+    menuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('show-dropdown');
+    });
+    document.addEventListener('click', function(event) {
+        if (!menuBtn.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.classList.remove('show-dropdown');
+        }
+    });
+
+    termsLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showPage(termsPage);
+    });
+    paymentLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showPage(paymentPage);
+    });
+    paymentMethodBtn.addEventListener('click', () => {
+        showPage(paymentPage);
+    });
+
+    // ---------- ربط الأيقونات بالأقسام ----------
     const iconCircles = document.querySelectorAll('.icon-circle');
     iconCircles.forEach(icon => {
         icon.addEventListener('click', function(e) {
@@ -199,6 +644,13 @@
                 this.style.backgroundColor = '';
                 this.style.color = '';
             }, 200);
+            const targetId = this.getAttribute('data-target');
+            if (targetId) {
+                const targetSection = document.getElementById(`section-${targetId}`);
+                if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            // إظهار الرئيسية إذا كنا في صفحة أخرى
+            showHomePage();
         });
     });
 
@@ -207,11 +659,13 @@
     const BASE_WA_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
     function encodeMsg(msg) { return encodeURIComponent(msg); }
     
-    // ---------- بيانات المنصات (جميع الخدمات السابقة - لم يتم تغيير أي شيء) ----------
+    // ---------- بيانات المنصات (تمت إضافة الخدمة الجديدة في Facebook) ----------
     const platformData = {
-        facebook: {
-            title: '<i class="fab fa-facebook-f"></i> فيسبوك - خدمات الزيادة',
+        facebook: { id: 'facebook', title: '<i class="fab fa-facebook-f"></i> فيسبوك - خدمات الزيادة',
             services: [
+                // الخدمة الجديدة (أول عنصر)
+                { name: "تزويد متابعين فيسبوك اجانب (بدون ضمان)", unit: "متابع", pricePerThousand: 35, guarantee: "بدون ضمان", icon: "fab fa-facebook-f" },
+                // باقي الخدمات كما هي
                 { name: "تزويد متابعين فيسبوك مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-facebook-f" },
                 { name: "تزويد متابعين فيسبوك مصريين (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-facebook-f" },
                 { name: "تزويد متابعين فيسبوك عرب", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-facebook-f" },
@@ -228,8 +682,7 @@
                 { name: "تزويد مشاهدات بث مباشر فيسبوك", unit: "مشاهدة", pricePerThousand: 99, guarantee: null, icon: "fas fa-video" }
             ]
         },
-        instagram: {
-            title: '<i class="fab fa-instagram"></i> انستقرام - تفاعل ومتابعين',
+        instagram: { id: 'instagram', title: '<i class="fab fa-instagram"></i> انستقرام - تفاعل ومتابعين',
             services: [
                 { name: "تزويد متابعين انستقرام مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-instagram" },
                 { name: "تزويد متابعين انستقرام مصريين (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-instagram" },
@@ -242,8 +695,7 @@
                 { name: "تزويد مشاهدات انستقرام مصريين وعرب", unit: "مشاهدة", pricePerThousand: 15, guarantee: null, icon: "fas fa-eye" }
             ]
         },
-        tiktok: {
-            title: '<i class="fab fa-tiktok"></i> تيك توك - نمو سريع',
+        tiktok: { id: 'tiktok', title: '<i class="fab fa-tiktok"></i> تيك توك - نمو سريع',
             services: [
                 { name: "تزويد متابعين تيك توك مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-tiktok" },
                 { name: "تزويد متابعين تيك توك مصريين (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-tiktok" },
@@ -257,8 +709,7 @@
                 { name: "تزويد تعليقات مصريين وعرب (ضمان 365 يوم)", unit: "تعليق", pricePerThousand: 110, guarantee: "ضمان 365 يوم", icon: "fas fa-comment-dots", isComment: true }
             ]
         },
-        youtube: {
-            title: '<i class="fab fa-youtube"></i> يوتيوب - مشاهدات ومشتركين',
+        youtube: { id: 'youtube', title: '<i class="fab fa-youtube"></i> يوتيوب - مشاهدات ومشتركين',
             services: [
                 { name: "تزويد مشتركين يوتيوب مصريين (ضمان 30 يوم)", unit: "مشترك", pricePerThousand: 680, guarantee: "ضمان 30 يوم", icon: "fab fa-youtube" },
                 { name: "تزويد مشتركين يوتيوب مصريين (عادي)", unit: "مشترك", pricePerThousand: 600, guarantee: null, icon: "fab fa-youtube" },
@@ -268,8 +719,7 @@
                 { name: "تزويد تعليقات يوتيوب مصريين وعرب", unit: "تعليق", pricePerThousand: 500, guarantee: null, icon: "fas fa-comment", isComment: true }
             ]
         },
-        telegram: {
-            title: '<i class="fab fa-telegram"></i> تليجرام - قنوات ومتابعين',
+        telegram: { id: 'telegram', title: '<i class="fab fa-telegram"></i> تليجرام - قنوات ومتابعين',
             services: [
                 { name: "تزويد قناه التليجرام مصريين (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-telegram" },
                 { name: "تزويد قناه التليجرام مصريين وعرب (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-telegram" },
@@ -277,8 +727,7 @@
                 { name: "تزويد لايكات تليجرام مصريين وعرب", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-thumbs-up" }
             ]
         },
-        twitter: {
-            title: '<i class="fab fa-twitter"></i> تويتر (X) - خدمات تفاعل',
+        twitter: { id: 'twitter', title: '<i class="fab fa-twitter"></i> تويتر (X) - خدمات تفاعل',
             services: [
                 { name: "تزويد متابعين تويتر (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-twitter" },
                 { name: "تزويد متابعين تويتر (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 120, guarantee: "ضمان 30 يوم", icon: "fab fa-twitter" },
@@ -288,24 +737,21 @@
                 { name: "تزويد مشاهدات تغريده تويتر (1000 بـ10)", unit: "مشاهدة", pricePerThousand: 10, guarantee: null, icon: "fas fa-chart-line" }
             ]
         },
-        snapchat: {
-            title: '<i class="fab fa-snapchat"></i> سناب شات - متابعين ولايكات',
+        snapchat: { id: 'snapchat', title: '<i class="fab fa-snapchat"></i> سناب شات - متابعين ولايكات',
             services: [
                 { name: "تزويد متابعين سناب شات عرب (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 1100, guarantee: "ضمان 30 يوم", icon: "fab fa-snapchat" },
                 { name: "تزويد متابعين سناب شات عرب (بدون ضمان)", unit: "متابع", pricePerThousand: 850, guarantee: "بدون ضمان", icon: "fab fa-snapchat" },
                 { name: "تزويد لايكات سناب شات", unit: "لايك", pricePerThousand: 900, guarantee: null, icon: "fas fa-heart" }
             ]
         },
-        whatsapp: {
-            title: '<i class="fab fa-whatsapp"></i> واتساب - قنوات ومتابعين',
+        whatsapp: { id: 'whatsapp', title: '<i class="fab fa-whatsapp"></i> واتساب - قنوات ومتابعين',
             services: [
                 { name: "تزويد اعضاء قناه واتساب (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-whatsapp" },
                 { name: "تزويد اعضاء قناه واتساب (ضمان 60 يوم)", unit: "متابع", pricePerThousand: 120, guarantee: "ضمان 60 يوم", icon: "fab fa-whatsapp" },
                 { name: "تزويد لايكات منشور واتساب", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-thumbs-up" }
             ]
         },
-        twitch: {
-            title: '<i class="fab fa-twitch"></i> تويتش - متابعين ومشاهدات',
+        twitch: { id: 'twitch', title: '<i class="fab fa-twitch"></i> تويتش - متابعين ومشاهدات',
             services: [
                 { name: "تزويد متابعين تويتش (بدون ضمان)", unit: "متابع", pricePerThousand: 55, guarantee: "بدون ضمان", icon: "fab fa-twitch" },
                 { name: "تزويد متابعين تويتش (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 65, guarantee: "ضمان 30 يوم", icon: "fab fa-twitch" },
@@ -316,7 +762,6 @@
         }
     };
     
-    // ---------- دالة إنشاء بطاقة مع تحديث الحد الأدنى لخدمات اللايكات ----------
     function createServiceCard(service) {
         const card = document.createElement('div'); card.className = 'service-card';
         const iconDiv = document.createElement('div'); iconDiv.className = 'card-icon'; iconDiv.innerHTML = `<i class="${service.icon}"></i>`;
@@ -333,17 +778,9 @@
         priceContainer.innerHTML = `<span class="price-value">${service.pricePerThousand}</span> <span class="price-currency">جنيه</span> <span class="small-unit">لكل 1000 ${service.unit}</span>`;
         card.appendChild(priceContainer);
         
-        // تحديد الحد الأدنى والخطوة
         let minLimit = 1000, stepValue = 500;
-        if (service.isComment === true) { 
-            minLimit = 50; 
-            stepValue = 10; 
-        } 
-        // إذا كانت الخدمة من نوع "لايك" (لايكات)
-        else if (service.name.includes("لايك") || service.unit === "لايك") {
-            minLimit = 250;
-            stepValue = 50;
-        }
+        if (service.isComment === true) { minLimit = 50; stepValue = 10; }
+        else if (service.name.includes("لايك") || service.unit === "لايك") { minLimit = 250; stepValue = 50; }
         
         const calcDiv = document.createElement('div'); calcDiv.className = 'quantity-calc';
         const label = document.createElement('span'); label.className = 'quantity-label'; 
@@ -387,15 +824,9 @@
         const buyBtn = document.createElement('button'); buyBtn.className = 'buy-btn'; buyBtn.innerHTML = '<i class="fab fa-whatsapp"></i> شراء الآن';
         buyBtn.addEventListener('click', () => {
             const link = urlInput.value.trim();
-            if (link === "") {
-                alert("⚠️ الرابط مطلوب! يرجى إدخال رابط الحساب أو المنشور أو الفيديو.");
-                return;
-            }
+            if (link === "") { alert("⚠️ الرابط مطلوب! يرجى إدخال رابط الحساب أو المنشور أو الفيديو."); return; }
             const res = updateTotal();
-            if (!res) { 
-                alert(`⚠️ يرجى إدخال كمية صحيحة. الحد الأدنى ${minLimit} ${service.unit}`);
-                return; 
-            }
+            if (!res) { alert(`⚠️ يرجى إدخال كمية صحيحة. الحد الأدنى ${minLimit} ${service.unit}`); return; }
             let message = `📋 طلب شراء خدمة : ${service.name}\n📊 الكمية المطلوبة : ${res.quantity.toLocaleString()} ${service.unit}\n💰 السعر الإجمالي : ${res.totalPrice} جنيه مصري\n🔗 رابط الهدف : ${link}\n✅ يرجى تأكيد الطلب وإتمام الدفع.`;
             registerNewOrder();
             window.open(BASE_WA_URL + encodeMsg(message), '_blank');
@@ -405,12 +836,11 @@
         return card;
     }
     
-    // بناء الأقسام
     const sectionsContainer = document.getElementById('sectionsContainer');
     function buildAllSections() {
         sectionsContainer.innerHTML = '';
         for (const [key, data] of Object.entries(platformData)) {
-            const section = document.createElement('div'); section.className = 'platform-section';
+            const section = document.createElement('div'); section.className = 'platform-section'; section.id = `section-${data.id}`;
             const headerDiv = document.createElement('div'); headerDiv.className = 'platform-header';
             const titleSpan = document.createElement('div'); titleSpan.className = 'platform-title'; titleSpan.innerHTML = data.title;
             const navDiv = document.createElement('div'); navDiv.className = 'slider-nav';
@@ -422,30 +852,11 @@
             const sliderDiv = document.createElement('div'); sliderDiv.className = 'cards-slider';
             data.services.forEach(service => { sliderDiv.appendChild(createServiceCard(service)); });
             section.appendChild(sliderDiv);
-            
-            // السحب بالماوس
             let isDragging = false, startX, scrollLeft;
-            sliderDiv.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.pageX - sliderDiv.offsetLeft;
-                scrollLeft = sliderDiv.scrollLeft;
-                sliderDiv.style.cursor = 'grabbing';
-                e.preventDefault();
-            });
-            window.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                const x = e.pageX - sliderDiv.offsetLeft;
-                const walk = (x - startX) * 1.5;
-                sliderDiv.scrollLeft = scrollLeft - walk;
-            });
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
-                sliderDiv.style.cursor = 'grab';
-            });
-            sliderDiv.querySelectorAll('a, button, input').forEach(el => {
-                el.addEventListener('mousedown', (e) => e.stopPropagation());
-            });
-            
+            sliderDiv.addEventListener('mousedown', (e) => { isDragging = true; startX = e.pageX - sliderDiv.offsetLeft; scrollLeft = sliderDiv.scrollLeft; sliderDiv.style.cursor = 'grabbing'; e.preventDefault(); });
+            window.addEventListener('mousemove', (e) => { if (!isDragging) return; const x = e.pageX - sliderDiv.offsetLeft; const walk = (x - startX) * 1.5; sliderDiv.scrollLeft = scrollLeft - walk; });
+            window.addEventListener('mouseup', () => { isDragging = false; sliderDiv.style.cursor = 'grab'; });
+            sliderDiv.querySelectorAll('a, button, input').forEach(el => el.addEventListener('mousedown', (e) => e.stopPropagation()));
             let scrollStep = 350;
             const updateStep = () => { const w = sliderDiv.querySelector('.service-card')?.offsetWidth || 340; scrollStep = w + 24; };
             setTimeout(updateStep, 100);
