@@ -33,7 +33,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* جميع الأنماط الأصلية - لم تتغير */
+        /* جميع الأنماط الأصلية - بدون تغيير جوهري */
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body { background-color: #0B0E11; font-family: 'Cairo', sans-serif; color: #EAECEF; line-height: 1.5; overflow-x: hidden; position: relative; }
         ::-webkit-scrollbar { width: 6px; height: 4px; }
@@ -379,6 +379,7 @@
     <a href="#" id="termsLink"><i class="fas fa-file-alt"></i> شروط الخدمة</a>
 </div>
 
+<!-- صفحات الشروط وطرق الدفع (مختصرة للطول لكنها كاملة في الكود النهائي) -->
 <div id="termsPage" class="overlay-page">
     <div class="overlay-container">
         <h1>شروط الخدمة</h1>
@@ -766,6 +767,7 @@
                 }
             };
             
+            // ======================= الدالة المعدلة (مع الحماية الكاملة) =======================
             function createServiceCard(service) {
                 const card = document.createElement('div'); card.className = 'service-card';
                 const iconDiv = document.createElement('div'); iconDiv.className = 'card-icon'; iconDiv.innerHTML = `<i class="${service.icon}"></i>`;
@@ -815,6 +817,7 @@
                 const errorSpan = document.createElement('div'); errorSpan.className = 'error-msg'; errorSpan.style.display = 'none';
                 calcDiv.append(label, input, urlLabel, urlInput, totalRow, errorSpan);
                 
+                // دالة التحديث تستخدم المتغيرات المحلية + العملة الحالية
                 function updateTotal() {
                     let raw = input.value.trim();
                     if (raw === "") { totalAmountSpan.innerText = '---'; errorSpan.style.display = 'none'; return null; }
@@ -845,18 +848,25 @@
                 
                 const buyBtn = document.createElement('button'); buyBtn.className = 'buy-btn'; buyBtn.innerHTML = '<i class="fab fa-whatsapp"></i> شراء الآن';
                 buyBtn.addEventListener('click', (e) => {
+                    // منع تسرب الحدث وتكرار الضغط
                     e.preventDefault();
                     e.stopPropagation();
-                    
-                    // منع الضغط المتكرر
                     if (buyBtn.disabled) return;
                     buyBtn.disabled = true;
                     setTimeout(() => { buyBtn.disabled = false; }, 3000);
                     
                     const link = urlInput.value.trim();
-                    if (link === "") { alert("⚠️ الرابط مطلوب! يرجى إدخال رابط الحساب أو المنشور أو الفيديو."); buyBtn.disabled = false; return; }
+                    if (link === "") {
+                        alert("⚠️ الرابط مطلوب! يرجى إدخال رابط الحساب أو المنشور أو الفيديو.");
+                        buyBtn.disabled = false;
+                        return;
+                    }
                     const res = updateTotal();
-                    if (!res) { alert(`⚠️ يرجى إدخال كمية صحيحة. الحد الأدنى ${minLimit} ${service.unit}`); buyBtn.disabled = false; return; }
+                    if (!res) {
+                        alert(`⚠️ يرجى إدخال كمية صحيحة. الحد الأدنى ${minLimit} ${service.unit}`);
+                        buyBtn.disabled = false;
+                        return;
+                    }
                     
                     let totalToDisplay = res.totalInEGP;
                     let currencyName = 'جنيه مصري';
@@ -865,10 +875,8 @@
                         currencyName = 'دولار أمريكي';
                     }
                     let formattedTotal = (currentCurrency === 'USD') ? totalToDisplay.toFixed(2) : Math.round(totalToDisplay).toLocaleString('en-US');
-                    
-                    // إنشاء الرسالة من الخدمة الحالية فقط (نسخة محلية)
+                    // الرسالة مبنية من بيانات الخدمة الحالية فقط
                     let message = `📋 طلب شراء خدمة : ${service.name}\n📊 الكمية المطلوبة : ${res.quantity.toLocaleString()} ${service.unit}\n💰 السعر الإجمالي : ${formattedTotal} ${currencyName}\n🔗 رابط الهدف : ${link}\n\n🌐 *لطلب خدمات أخرى، يمكنك العودة إلى موقعنا:*\nhttps://smcole.com\n\n✅ يرجى تأكيد الطلب وإتمام الدفع.`;
-                    
                     if (window.registerNewOrder) window.registerNewOrder();
                     window.open(BASE_WA_URL + encodeMsg(message), '_blank');
                 });
