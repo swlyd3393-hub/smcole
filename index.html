@@ -550,7 +550,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // جميع الكود الأصلي لم يتغير نهائياً ما عدا platformData (تم استبدال الخدمات فقط)
+    // جميع الكود الأصلي لم يتغير نهائياً ما عدا platformData (تم إضافة خدمة واحدة فقط في اليوتيوب)
     let currentCurrency = 'EGP';
     let exchangeRate = 48.5;
     
@@ -938,7 +938,7 @@
                 return [...followers, ...others];
             }
             
-            // ===================== SERVICES REPLACED (NEW) =====================
+            // ===================== SERVICES - بإضافة خدمة جديدة في اليوتيوب =====================
             const platformData = {
                 facebook: { id: 'facebook', title: '<i class="fab fa-facebook-f"></i> فيسبوك - خدمات الزيادة',
                     services: sortFollowers([
@@ -996,6 +996,8 @@
                         { name: "تزويد لايكات يوتيوب فيديو (بدون ضمان)", unit: "لايك", pricePerThousand: 90, guarantee: "بدون ضمان", icon: "fas fa-thumbs-up" },
                         { name: "تزويد لايكات يوتيوب فيديو (ضمان 30 يوم)", unit: "لايك", pricePerThousand: 120, guarantee: "ضمان 30 يوم", icon: "fas fa-thumbs-up" },
                         { name: "تزويد لايكات يوتيوب فيديو (ضمان 365 يوم)", unit: "لايك", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fas fa-thumbs-up" },
+                        // الخدمة الجديدة المضافة هنا:
+                        { name: "تزويد مشاهدات يوتيوب فيديو (بدون ضمان)", unit: "مشاهدة", pricePerThousand: 100, guarantee: "بدون ضمان", icon: "fas fa-video" },
                         { name: "تزويد مشاهدات يوتيوب فيديو (ضمان 30 يوم)", unit: "مشاهدة", pricePerThousand: 160, guarantee: "ضمان 30 يوم", icon: "fas fa-video" },
                         { name: "تزويد مشاهدات يوتيوب فيديو (ضمان 365 يوم)", unit: "مشاهدة", pricePerThousand: 180, guarantee: "ضمان 365 يوم", icon: "fas fa-video" },
                         { name: "تزويد مشاهدات بث مباشر يوتيوب فيديو", unit: "مشاهدة", pricePerThousand: 160, guarantee: "بدون ضمان", icon: "fas fa-tv" },
@@ -1048,7 +1050,7 @@
                     ])
                 }
             };
-            // ===================== END SERVICES REPLACEMENT =====================
+            // ===================== END SERVICES =====================
             
             let serviceCounter = 1;
             
