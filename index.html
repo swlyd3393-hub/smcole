@@ -550,7 +550,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // جميع الكود الأصلي لم يتغير نهائياً
+    // جميع الكود الأصلي لم يتغير نهائياً ما عدا platformData (تم استبدال الخدمات فقط)
     let currentCurrency = 'EGP';
     let exchangeRate = 48.5;
     
@@ -938,105 +938,117 @@
                 return [...followers, ...others];
             }
             
+            // ===================== SERVICES REPLACED (NEW) =====================
             const platformData = {
                 facebook: { id: 'facebook', title: '<i class="fab fa-facebook-f"></i> فيسبوك - خدمات الزيادة',
                     services: sortFollowers([
-                        { name: "تزويد متابعين فيسبوك اجانب (بدون ضمان)", unit: "متابع", pricePerThousand: 35, guarantee: "بدون ضمان", icon: "fab fa-facebook-f" },
-                        { name: "تزويد متابعين فيسبوك عرب", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-facebook-f" },
-                        { name: "تزويد متابعين فيسبوك مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-facebook-f" },
-                        { name: "تزويد متابعين فيسبوك مصريين (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-facebook-f" },
-                        { name: "تزويد متابعين فيسبوك ميكس عرب وأجانب", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-facebook-f" },
-                        { name: "تزويد متابعين فيسبوك رخيص (بدون ضمان)", unit: "متابع", pricePerThousand: 55, guarantee: "بدون ضمان", icon: "fab fa-facebook-f" },
-                        { name: "تزويد مشاهدات فيسبوك (فيديو/ريلز)", unit: "مشاهدة", pricePerThousand: 60, guarantee: null, icon: "fas fa-play-circle" },
-                        { name: "تزويد لايكات فيسبوك (صور/فيديو)", unit: "لايك", pricePerThousand: 60, guarantee: null, icon: "fas fa-thumbs-up" },
-                        { name: "تزويد لايكات فيسبوك مصريين ميكس", unit: "لايك", pricePerThousand: 120, guarantee: null, icon: "fas fa-thumbs-up" },
-                        { name: "تزويد لايكات فيسبوك أجانب", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-thumbs-up" },
-                        { name: "تزويد تعليقات فيسبوك مصريين", unit: "تعليق", pricePerThousand: 1000, guarantee: null, icon: "fas fa-comments", isComment: true },
-                        { name: "تزويد تعليقات فيسبوك مصريين وعرب", unit: "تعليق", pricePerThousand: 650, guarantee: null, icon: "fas fa-comments", isComment: true },
-                        { name: "تزويد مشاهدات فيسبوك مصريين وعرب", unit: "مشاهدة", pricePerThousand: 65, guarantee: null, icon: "fas fa-eye" },
-                        { name: "تزويد لايك لتعليق فيسبوك", unit: "لايك", pricePerThousand: 120, guarantee: null, icon: "fas fa-thumbs-up" },
-                        { name: "تزويد مشاهدات بث مباشر فيسبوك", unit: "مشاهدة", pricePerThousand: 99, guarantee: null, icon: "fas fa-video" }
+                        { name: "تزويد متابعين فيسبوك بدون ضمان", unit: "متابع", pricePerThousand: 70, guarantee: "بدون ضمان", icon: "fab fa-facebook-f" },
+                        { name: "تزويد متابعين فيسبوك ضمان 30 يوم", unit: "متابع", pricePerThousand: 100, guarantee: "ضمان 30 يوم", icon: "fab fa-facebook-f" },
+                        { name: "تزويد متابعين فيسبوك ضمان 365 يوم", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-facebook-f" },
+                        { name: "تزويد لايكات فيسبوك صوره فيديو (بدون ضمان)", unit: "لايك", pricePerThousand: 60, guarantee: "بدون ضمان", icon: "fas fa-thumbs-up" },
+                        { name: "تزويد لايكات فيسبوك صوره فيديو (ضمان 30 يوم)", unit: "لايك", pricePerThousand: 100, guarantee: "ضمان 30 يوم", icon: "fas fa-thumbs-up" },
+                        { name: "تزويد لايكات فيسبوك صوره فيديو (ضمان 365 يوم)", unit: "لايك", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fas fa-thumbs-up" },
+                        { name: "تزويد لايكات لتعليق فيسبوك", unit: "تعليق", pricePerThousand: 120, guarantee: "ضمان 30 يوم", icon: "fas fa-thumbs-up" },
+                        { name: "تزويد مشاهدات فيسبوك فيديو (بدون ضمان)", unit: "مشاهدة", pricePerThousand: 60, guarantee: "بدون ضمان", icon: "fas fa-play-circle" },
+                        { name: "تزويد مشاهدات فيسبوك فيديو (ضمان 30 يوم)", unit: "مشاهدة", pricePerThousand: 80, guarantee: "ضمان 30 يوم", icon: "fas fa-play-circle" },
+                        { name: "تزويد مشاهدات فيسبوك فيديو (ضمان 365 يوم)", unit: "مشاهدة", pricePerThousand: 100, guarantee: "ضمان 365 يوم", icon: "fas fa-play-circle" },
+                        { name: "تزويد مشاهدات بث مباشر فيسبوك", unit: "مشاهدة", pricePerThousand: 100, guarantee: "ضمان 365 يوم", icon: "fas fa-video" },
+                        { name: "تزويد تعليقات فيسبوك صوره فيديو (بدون ضمان)", unit: "تعليق", pricePerThousand: 600, guarantee: "بدون ضمان", icon: "fas fa-comments", isComment: true },
+                        { name: "تزويد تعليقات فيسبوك صوره فيديو (ضمان 30 يوم)", unit: "تعليق", pricePerThousand: 1100, guarantee: "ضمان 30 يوم", icon: "fas fa-comments", isComment: true }
                     ])
                 },
                 instagram: { id: 'instagram', title: '<i class="fab fa-instagram"></i> انستقرام - تفاعل ومتابعين',
                     services: sortFollowers([
-                        { name: "تزويد متابع انستقرام رخيص (بدون ضمان)", unit: "متابع", pricePerThousand: 55, guarantee: "بدون ضمان", icon: "fab fa-instagram" },
-                        { name: "تزويد متابعين انستقرام مصريين (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-instagram" },
-                        { name: "تزويد متابعين انستقرام مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-instagram" },
-                        { name: "تزويد متابعين انستقرام عرب (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-instagram" },
-                        { name: "تزويد مشاهدات انستقرام (ستوري/ريلز)", unit: "مشاهدة", pricePerThousand: 60, guarantee: null, icon: "fas fa-eye" },
-                        { name: "تزويد لايكات انستقرام مصريين", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-heart" },
-                        { name: "تزويد لايكات انستقرام عرب", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-heart" },
-                        { name: "تزويد تعليقات انستقرام مصريين وعرب", unit: "تعليق", pricePerThousand: 99, guarantee: null, icon: "fas fa-comment", isComment: true },
-                        { name: "تزويد مشاهدات انستقرام مصريين وعرب", unit: "مشاهدة", pricePerThousand: 15, guarantee: null, icon: "fas fa-eye" }
+                        { name: "تزويد متابعين انستقرام بدون ضمان", unit: "متابع", pricePerThousand: 90, guarantee: "بدون ضمان", icon: "fab fa-instagram" },
+                        { name: "تزويد متابعين انستقرام ضمان 30 يوم", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 30 يوم", icon: "fab fa-instagram" },
+                        { name: "تزويد متابعين انستقرام ضمان 365 يوم", unit: "متابع", pricePerThousand: 220, guarantee: "ضمان 365 يوم", icon: "fab fa-instagram" },
+                        { name: "تزويد لايكات انستقرام صوره فيديو (بدون ضمان)", unit: "لايك", pricePerThousand: 50, guarantee: "بدون ضمان", icon: "fas fa-heart" },
+                        { name: "تزويد لايكات انستقرام صوره فيديو (ضمان 30 يوم)", unit: "لايك", pricePerThousand: 100, guarantee: "ضمان 30 يوم", icon: "fas fa-heart" },
+                        { name: "تزويد لايكات انستقرام صوره فيديو (ضمان 365 يوم)", unit: "لايك", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fas fa-heart" },
+                        { name: "تزويد مشاهدات انستقرام فيديو (بدون ضمان)", unit: "مشاهدة", pricePerThousand: 50, guarantee: "بدون ضمان", icon: "fas fa-eye" },
+                        { name: "تزويد مشاهدات انستقرام فيديو (ضمان 30 يوم)", unit: "مشاهدة", pricePerThousand: 90, guarantee: "ضمان 30 يوم", icon: "fas fa-eye" },
+                        { name: "تزويد مشاهدات انستقرام فيديو (ضمان 365 يوم)", unit: "مشاهدة", pricePerThousand: 130, guarantee: "ضمان 365 يوم", icon: "fas fa-eye" },
+                        { name: "تزويد تعليقات انستقرام فيديو صوره (بدون ضمان)", unit: "تعليق", pricePerThousand: 500, guarantee: "بدون ضمان", icon: "fas fa-comment", isComment: true },
+                        { name: "تزويد تعليقات انستقرام فيديو صوره (ضمان 30 يوم)", unit: "تعليق", pricePerThousand: 1000, guarantee: "ضمان 30 يوم", icon: "fas fa-comment", isComment: true }
                     ])
                 },
                 tiktok: { id: 'tiktok', title: '<i class="fab fa-tiktok"></i> تيك توك - نمو سريع',
                     services: sortFollowers([
-                        { name: "تزويد متابع تيك توك رخيص (بدون ضمان)", unit: "متابع", pricePerThousand: 75, guarantee: "بدون ضمان", icon: "fab fa-tiktok" },
-                        { name: "تزويد متابعين تيك توك مصريين (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-tiktok" },
-                        { name: "تزويد متابعين تيك توك أجانب", unit: "متابع", pricePerThousand: 110, guarantee: null, icon: "fab fa-tiktok" },
-                        { name: "تزويد متابعين تيك توك مصريين (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-tiktok" },
-                        { name: "تزويد متابعين تيك توك عرب (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-tiktok" },
-                        { name: "تزويد مشاهدات تيك توك مصريين", unit: "مشاهدة", pricePerThousand: 20, guarantee: null, icon: "fas fa-fire" },
-                        { name: "تزويد لايكات تيك توك مصريين", unit: "لايك", pricePerThousand: 20, guarantee: null, icon: "fas fa-heart" },
-                        { name: "تزويد لايكات تيك توك أجانب", unit: "لايك", pricePerThousand: 60, guarantee: null, icon: "fas fa-heart" },
-                        { name: "تزويد تعليقات تيك توك مصريين وعرب", unit: "تعليق", pricePerThousand: 60, guarantee: null, icon: "fas fa-comment", isComment: true },
-                        { name: "تزويد تعليقات مصريين وعرب (ضمان 365 يوم)", unit: "تعليق", pricePerThousand: 110, guarantee: "ضمان 365 يوم", icon: "fas fa-comment-dots", isComment: true }
+                        { name: "تزويد متابعين تيك توك بدون ضمان", unit: "متابع", pricePerThousand: 100, guarantee: "بدون ضمان", icon: "fab fa-tiktok" },
+                        { name: "تزويد متابعين تيك توك ضمان 30 يوم", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 30 يوم", icon: "fab fa-tiktok" },
+                        { name: "تزويد متابعين تيك توك ضمان 365 يوم", unit: "متابع", pricePerThousand: 190, guarantee: "ضمان 365 يوم", icon: "fab fa-tiktok" },
+                        { name: "تزويد لايكات تيك توك (بدون ضمان)", unit: "لايك", pricePerThousand: 60, guarantee: "بدون ضمان", icon: "fas fa-heart" },
+                        { name: "تزويد لايكات تيك توك (ضمان 30 يوم)", unit: "لايك", pricePerThousand: 90, guarantee: "ضمان 30 يوم", icon: "fas fa-heart" },
+                        { name: "تزويد لايكات تيك توك (ضمان 365 يوم)", unit: "لايك", pricePerThousand: 120, guarantee: "ضمان 365 يوم", icon: "fas fa-heart" },
+                        { name: "تزويد مشاهدات تيك توك (بدون ضمان)", unit: "مشاهدة", pricePerThousand: 40, guarantee: "بدون ضمان", icon: "fas fa-fire" },
+                        { name: "تزويد مشاهدات تيك توك (ضمان 30 يوم)", unit: "مشاهدة", pricePerThousand: 60, guarantee: "ضمان 30 يوم", icon: "fas fa-fire" },
+                        { name: "تزويد مشاهدات تيك توك (ضمان 365 يوم)", unit: "مشاهدة", pricePerThousand: 90, guarantee: "ضمان 365 يوم", icon: "fas fa-fire" },
+                        { name: "تزويد مشاهدات بث مباشر تيك توك", unit: "مشاهدة", pricePerThousand: 60, guarantee: "ضمان 30 يوم", icon: "fas fa-video" },
+                        { name: "تزويد تعليقات تيك توك (بدون ضمان)", unit: "تعليق", pricePerThousand: 250, guarantee: "بدون ضمان", icon: "fas fa-comment", isComment: true },
+                        { name: "تزويد تعليقات تيك توك (ضمان 30 يوم)", unit: "تعليق", pricePerThousand: 500, guarantee: "ضمان 30 يوم", icon: "fas fa-comment", isComment: true }
                     ])
                 },
                 youtube: { id: 'youtube', title: '<i class="fab fa-youtube"></i> يوتيوب - مشاهدات ومشتركين',
                     services: sortFollowers([
-                        { name: "تزويد متابع يوتيوب رخيص (بدون ضمان)", unit: "مشترك", pricePerThousand: 250, guarantee: "بدون ضمان", icon: "fab fa-youtube" },
-                        { name: "تزويد مشتركين يوتيوب مصريين (عادي)", unit: "مشترك", pricePerThousand: 600, guarantee: null, icon: "fab fa-youtube" },
-                        { name: "تزويد مشتركين يوتيوب مصريين (ضمان 30 يوم)", unit: "مشترك", pricePerThousand: 680, guarantee: "ضمان 30 يوم", icon: "fab fa-youtube" },
-                        { name: "تزويد مشاهدات يوتيوب مصريين", unit: "مشاهدة", pricePerThousand: 99, guarantee: null, icon: "fas fa-video" },
-                        { name: "تزويد لايكات يوتيوب مصريين", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-thumbs-up" },
-                        { name: "تزويد تعليقات يوتيوب مصريين وعرب", unit: "تعليق", pricePerThousand: 500, guarantee: null, icon: "fas fa-comment", isComment: true }
+                        { name: "تزويد مشتركين يوتيوب بدون ضمان", unit: "مشترك", pricePerThousand: 300, guarantee: "بدون ضمان", icon: "fab fa-youtube" },
+                        { name: "تزويد مشتركين يوتيوب ضمان 30 يوم", unit: "مشترك", pricePerThousand: 800, guarantee: "ضمان 30 يوم", icon: "fab fa-youtube" },
+                        { name: "تزويد مشتركين يوتيوب ضمان 365 يوم", unit: "مشترك", pricePerThousand: 2300, guarantee: "ضمان 365 يوم", icon: "fab fa-youtube" },
+                        { name: "تزويد لايكات يوتيوب فيديو (بدون ضمان)", unit: "لايك", pricePerThousand: 90, guarantee: "بدون ضمان", icon: "fas fa-thumbs-up" },
+                        { name: "تزويد لايكات يوتيوب فيديو (ضمان 30 يوم)", unit: "لايك", pricePerThousand: 120, guarantee: "ضمان 30 يوم", icon: "fas fa-thumbs-up" },
+                        { name: "تزويد لايكات يوتيوب فيديو (ضمان 365 يوم)", unit: "لايك", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fas fa-thumbs-up" },
+                        { name: "تزويد مشاهدات يوتيوب فيديو (ضمان 30 يوم)", unit: "مشاهدة", pricePerThousand: 160, guarantee: "ضمان 30 يوم", icon: "fas fa-video" },
+                        { name: "تزويد مشاهدات يوتيوب فيديو (ضمان 365 يوم)", unit: "مشاهدة", pricePerThousand: 180, guarantee: "ضمان 365 يوم", icon: "fas fa-video" },
+                        { name: "تزويد مشاهدات بث مباشر يوتيوب فيديو", unit: "مشاهدة", pricePerThousand: 160, guarantee: "بدون ضمان", icon: "fas fa-tv" },
+                        { name: "تزويد تعليقات يوتيوب فيديو (بدون ضمان)", unit: "تعليق", pricePerThousand: 500, guarantee: "بدون ضمان", icon: "fas fa-comment", isComment: true },
+                        { name: "تزويد تعليقات يوتيوب فيديو (ضمان 30 يوم)", unit: "تعليق", pricePerThousand: 900, guarantee: "ضمان 30 يوم", icon: "fas fa-comment", isComment: true },
+                        { name: "تزويد تعليقات يوتيوب فيديو (ضمان 365 يوم)", unit: "تعليق", pricePerThousand: 6000, guarantee: "ضمان 365 يوم", icon: "fas fa-comment", isComment: true }
                     ])
                 },
                 telegram: { id: 'telegram', title: '<i class="fab fa-telegram"></i> تليجرام - قنوات ومتابعين',
                     services: sortFollowers([
-                        { name: "تزويد قناه تليجرام مصريين وعرب (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-telegram" },
-                        { name: "تزويد قناه التليجرام مصريين وعرب (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 110, guarantee: "ضمان 30 يوم", icon: "fab fa-telegram" },
-                        { name: "تزويد قناه التليجرام مصريين (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-telegram" },
-                        { name: "تزويد لايكات تليجرام مصريين وعرب", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-thumbs-up" }
+                        { name: "تزويد متابعين قناه تليجرام بدون ضمان", unit: "متابع", pricePerThousand: 100, guarantee: "بدون ضمان", icon: "fab fa-telegram" },
+                        { name: "تزويد متابعين قناه التليجرام ضمان 30 يوم", unit: "متابع", pricePerThousand: 130, guarantee: "ضمان 30 يوم", icon: "fab fa-telegram" },
+                        { name: "تزويد متابعين قناه تليجرام ضمان 365 يوم", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-telegram" },
+                        { name: "تزويد لايكات بوست تليجرام", unit: "لايك", pricePerThousand: 100, guarantee: "ضمان 30 يوم", icon: "fas fa-thumbs-up" }
                     ])
                 },
                 twitter: { id: 'twitter', title: '<i class="fab fa-twitter"></i> تويتر (X) - خدمات تفاعل',
                     services: sortFollowers([
-                        { name: "تزويد متابعين تويتر (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-twitter" },
-                        { name: "تزويد متابعين تويتر (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 120, guarantee: "ضمان 30 يوم", icon: "fab fa-twitter" },
-                        { name: "تزويد متابعين تويتر (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 180, guarantee: "ضمان 365 يوم", icon: "fab fa-twitter" },
-                        { name: "تزويد لايك منشور تويتر", unit: "لايك", pricePerThousand: 65, guarantee: null, icon: "fas fa-heart" },
-                        { name: "تزويد مشاهدات تغريده تويتر (1000 بـ20)", unit: "مشاهدة", pricePerThousand: 20, guarantee: null, icon: "fas fa-eye" },
-                        { name: "تزويد مشاهدات تغريده تويتر (1000 بـ10)", unit: "مشاهدة", pricePerThousand: 10, guarantee: null, icon: "fas fa-chart-line" }
+                        { name: "تزويد متابعين تويتر بدون ضمان", unit: "متابع", pricePerThousand: 100, guarantee: "بدون ضمان", icon: "fab fa-twitter" },
+                        { name: "تزويد متابعين تويتر ضمان 30 يوم", unit: "متابع", pricePerThousand: 130, guarantee: "ضمان 30 يوم", icon: "fab fa-twitter" },
+                        { name: "تزويد متابعين تويتر ضمان 365 يوم", unit: "متابع", pricePerThousand: 180, guarantee: "ضمان 365 يوم", icon: "fab fa-twitter" },
+                        { name: "تزويد لايكات منشور تويتر", unit: "لايك", pricePerThousand: 100, guarantee: "ضمان 30 يوم", icon: "fas fa-heart" },
+                        { name: "تزويد مشاهدات تغريد التويتر (ضمان 30 يوم)", unit: "مشاهدة", pricePerThousand: 50, guarantee: "ضمان 30 يوم", icon: "fas fa-eye" },
+                        { name: "تزويد مشاهدات تغريد التويتر (ضمان 365 يوم)", unit: "مشاهدة", pricePerThousand: 100, guarantee: "ضمان 365 يوم", icon: "fas fa-chart-line" }
                     ])
                 },
                 snapchat: { id: 'snapchat', title: '<i class="fab fa-snapchat"></i> سناب شات - متابعين ولايكات',
                     services: sortFollowers([
-                        { name: "تزويد متابعين سناب شات عرب (بدون ضمان)", unit: "متابع", pricePerThousand: 850, guarantee: "بدون ضمان", icon: "fab fa-snapchat" },
-                        { name: "تزويد متابعين سناب شات عرب (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 1100, guarantee: "ضمان 30 يوم", icon: "fab fa-snapchat" },
-                        { name: "تزويد لايكات سناب شات", unit: "لايك", pricePerThousand: 900, guarantee: null, icon: "fas fa-heart" }
+                        { name: "تزويد متابعين سناب شات بدون ضمان", unit: "متابع", pricePerThousand: 900, guarantee: "بدون ضمان", icon: "fab fa-snapchat" },
+                        { name: "تزويد متابعين سناب شات ضمان 30 يوم", unit: "متابع", pricePerThousand: 1200, guarantee: "ضمان 30 يوم", icon: "fab fa-snapchat" },
+                        { name: "تزويد متابعين سناب شات ضمان 365 يوم", unit: "متابع", pricePerThousand: 3000, guarantee: "ضمان 365 يوم", icon: "fab fa-snapchat" },
+                        { name: "تزويد لايكات سناب شات", unit: "لايك", pricePerThousand: 1000, guarantee: "ضمان 30 يوم", icon: "fas fa-heart" }
                     ])
                 },
                 whatsapp: { id: 'whatsapp', title: '<i class="fab fa-whatsapp"></i> واتساب - قنوات ومتابعين',
                     services: sortFollowers([
-                        { name: "تزويد اعضاء قناه واتساب (عادي)", unit: "متابع", pricePerThousand: 99, guarantee: null, icon: "fab fa-whatsapp" },
-                        { name: "تزويد اعضاء قناه واتساب (ضمان 60 يوم)", unit: "متابع", pricePerThousand: 120, guarantee: "ضمان 60 يوم", icon: "fab fa-whatsapp" },
-                        { name: "تزويد لايكات منشور واتساب", unit: "لايك", pricePerThousand: 99, guarantee: null, icon: "fas fa-thumbs-up" }
+                        { name: "تزويد اعضاء قناه وتساب بدون ضمان", unit: "عضو", pricePerThousand: 100, guarantee: "بدون ضمان", icon: "fab fa-whatsapp" },
+                        { name: "تزويد اعضاء قناه وتساب (ضمان 30 يوم)", unit: "عضو", pricePerThousand: 150, guarantee: "ضمان 30 يوم", icon: "fab fa-whatsapp" },
+                        { name: "تزويد اعضاء قناه وتساب (ضمان 365 يوم)", unit: "عضو", pricePerThousand: 200, guarantee: "ضمان 365 يوم", icon: "fab fa-whatsapp" },
+                        { name: "تزويد لايكات منشور وتساب", unit: "لايك", pricePerThousand: 100, guarantee: "ضمان 30 يوم", icon: "fas fa-thumbs-up" }
                     ])
                 },
                 twitch: { id: 'twitch', title: '<i class="fab fa-twitch"></i> تويتش - متابعين ومشاهدات',
                     services: sortFollowers([
-                        { name: "تزويد متابعين تويتش (بدون ضمان)", unit: "متابع", pricePerThousand: 55, guarantee: "بدون ضمان", icon: "fab fa-twitch" },
-                        { name: "تزويد متابعين تويتش (ضمان 30 يوم)", unit: "متابع", pricePerThousand: 65, guarantee: "ضمان 30 يوم", icon: "fab fa-twitch" },
-                        { name: "تزويد متابعين تويتش (ضمان 365 يوم)", unit: "متابع", pricePerThousand: 99, guarantee: "ضمان 365 يوم", icon: "fab fa-twitch" },
-                        { name: "تزويد مشاهدات فيديو تويتش", unit: "مشاهدة", pricePerThousand: 99, guarantee: null, icon: "fas fa-video" },
-                        { name: "تزويد مشاهدات بث مباشر تويتش", unit: "مشاهدة", pricePerThousand: 99, guarantee: null, icon: "fas fa-tv" }
+                        { name: "تزويد متابعين تويتش بدون ضمان", unit: "متابع", pricePerThousand: 60, guarantee: "بدون ضمان", icon: "fab fa-twitch" },
+                        { name: "تزويد متابعين تويتش ضمان 30 يوم", unit: "متابع", pricePerThousand: 100, guarantee: "ضمان 30 يوم", icon: "fab fa-twitch" },
+                        { name: "تزويد متابعين تويتش ضمان 365 يوم", unit: "متابع", pricePerThousand: 150, guarantee: "ضمان 365 يوم", icon: "fab fa-twitch" },
+                        { name: "تزويد مشاهدات فيديو تويتش", unit: "مشاهدة", pricePerThousand: 100, guarantee: "ضمان 30 يوم", icon: "fas fa-video" },
+                        { name: "تزويد مشاهدات بث مباشر فيديو تويتش", unit: "مشاهدة", pricePerThousand: 100, guarantee: "ضمان 30 يوم", icon: "fas fa-tv" }
                     ])
                 }
             };
+            // ===================== END SERVICES REPLACEMENT =====================
             
             let serviceCounter = 1;
             
